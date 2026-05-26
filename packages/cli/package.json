@@ -1,0 +1,50 @@
+{
+  "name": "appblueprints",
+  "version": "0.0.1",
+  "description": "Multi-harness AI coding config generator. Generate AGENTS.md, CLAUDE.md, .cursor/rules, skills and MCP bundles for whichever AI coding tool you use.",
+  "type": "module",
+  "bin": {
+    "appblueprints": "./dist/bin.js"
+  },
+  "files": [
+    "dist",
+    "data"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/copy-data.mjs && chmod +x dist/bin.js",
+    "dev": "node --import tsx src/bin.ts",
+    "test": "vitest run",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "@appblueprints/core": "workspace:*",
+    "@clack/prompts": "^0.7.0",
+    "kleur": "^4.1.5",
+    "yargs-parser": "^21.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/yargs-parser": "^21.0.3",
+    "tsx": "^4.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  },
+  "keywords": [
+    "ai",
+    "claude",
+    "cursor",
+    "codex",
+    "agents.md",
+    "claude.md",
+    "scaffold",
+    "mcp",
+    "skills"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

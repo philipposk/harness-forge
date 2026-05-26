@@ -1,0 +1,35 @@
+id: continue
+name: Continue
+vendor: Continue Dev Inc.
+homepage: https://continue.dev
+docsUrl: https://docs.continue.dev/reference
+configFiles:
+  - path: .continue/config.yaml
+    scope: project
+    format: yaml
+    required: true
+  - path: ~/.continue/config.yaml
+    scope: global
+    format: yaml
+    required: false
+supports:
+  skills: false
+  mcp: true
+  memory: false
+  customCommands: true
+  ignoreFile: false
+agentsMdCompatible: false
+exampleSnippet: |
+  name: my-project
+  version: 0.0.1
+  schema: v1
+  rules:
+    - "Use TypeScript for all new files"
+    - "Keep functions under 50 lines"
+  models:
+    - name: Claude Opus
+      provider: anthropic
+      model: claude-opus-4-20250514
+notes: |
+  Continue migrated from config.json to config.yaml in 2025. Both still supported.
+  Custom commands defined inline in config; MCP via mcpServers block.

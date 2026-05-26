@@ -1,0 +1,38 @@
+id: codex
+name: Codex CLI
+vendor: OpenAI
+homepage: https://openai.com/codex
+docsUrl: https://developers.openai.com/codex/guides/agents-md
+configFiles:
+  - path: AGENTS.md
+    scope: project
+    format: markdown
+    required: true
+  - path: ~/.codex/AGENTS.md
+    scope: global
+    format: markdown
+    required: false
+  - path: ~/.codex/config.toml
+    scope: global
+    format: toml
+    required: false
+supports:
+  skills: false
+  mcp: true
+  memory: true
+  customCommands: false
+  ignoreFile: false
+agentsMdCompatible: true
+exampleSnippet: |
+  # Project
+
+  ## Setup
+  `pnpm install && pnpm dev`
+
+  ## Testing
+  `pnpm test` runs Vitest. Integration tests under `test/integration/`.
+
+  ## Code style
+  TypeScript strict. ESLint config in repo root.
+notes: |
+  AGENTS.md is the canonical config file. Codex was the original driver of the AGENTS.md open standard.

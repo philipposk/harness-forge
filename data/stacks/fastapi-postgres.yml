@@ -1,0 +1,21 @@
+id: fastapi-postgres
+name: FastAPI + Postgres
+description: Python FastAPI backend with SQLAlchemy and Postgres. Suits API-first services and AI/ML backends.
+tags: [python, fastapi, postgres, backend]
+recommendedSkills:
+  - testing-pytest
+  - lint-ruff
+  - docs-mkdocs
+  - db-alembic
+  - api-openapi
+recommendedMcps:
+  - github
+  - postgres
+  - filesystem
+  - sentry
+conventions:
+  - "Python 3.11+ with type hints on every function signature."
+  - "Pydantic v2 for request/response schemas."
+  - "Alembic for database migrations; never alter schema by hand."
+  - "Ruff for lint+format, mypy for type checking."
+  - "Tests with pytest, fixtures in conftest.py, factory-boy for test data."

@@ -1,0 +1,22 @@
+id: react-node
+name: React + Node
+description: Full-stack JavaScript with React frontend and Node.js backend (Express/Fastify). Default for SaaS prototypes and internal tools.
+tags: [javascript, typescript, react, node, fullstack]
+recommendedSkills:
+  - testing-vitest
+  - lint-eslint-prettier
+  - docs-tsdoc
+  - git-conventional-commits
+  - frontend-tailwind
+recommendedMcps:
+  - github
+  - filesystem
+  - postgres
+  - puppeteer
+  - sentry
+conventions:
+  - "Use TypeScript strict mode across both frontend and backend."
+  - "Prefer functional React components with hooks; no class components."
+  - "API routes return typed responses; share types from a /shared package."
+  - "Vitest for unit tests, Playwright for end-to-end."
+  - "ESLint + Prettier, formatted on save."

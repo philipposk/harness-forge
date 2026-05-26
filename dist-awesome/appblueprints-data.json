@@ -1,0 +1,1847 @@
+{
+  "generatedAt": "2026-05-26T01:17:26.697Z",
+  "harnesses": [
+    {
+      "id": "aider",
+      "name": "Aider",
+      "vendor": "Aider",
+      "homepage": "https://aider.chat",
+      "docsUrl": "https://aider.chat/docs/config.html",
+      "configFiles": [
+        {
+          "path": ".aider.conf.yml",
+          "scope": "project",
+          "format": "yaml",
+          "required": true
+        },
+        {
+          "path": "CONVENTIONS.md",
+          "scope": "project",
+          "format": "markdown",
+          "required": false
+        },
+        {
+          "path": ".aiderignore",
+          "scope": "project",
+          "format": "plaintext",
+          "required": false
+        }
+      ],
+      "supports": {
+        "skills": false,
+        "mcp": false,
+        "memory": false,
+        "customCommands": false,
+        "ignoreFile": true
+      },
+      "agentsMdCompatible": false,
+      "exampleSnippet": "read:\n  - CONVENTIONS.md\nmodel: anthropic/claude-opus-4-20250514\nauto-commits: false\ntest-cmd: pnpm test\n",
+      "notes": "Aider has no skill or MCP system. CONVENTIONS.md is read-only context, not a config target.\n.aider.conf.yml is the actual config; we generate both.\n"
+    },
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "vendor": "Anthropic",
+      "homepage": "https://claude.com/code",
+      "docsUrl": "https://docs.claude.com/en/docs/claude-code/overview",
+      "configFiles": [
+        {
+          "path": "CLAUDE.md",
+          "scope": "project",
+          "format": "markdown",
+          "required": true
+        },
+        {
+          "path": "~/.claude/CLAUDE.md",
+          "scope": "global",
+          "format": "markdown",
+          "required": false
+        },
+        {
+          "path": ".claude/settings.json",
+          "scope": "project",
+          "format": "json",
+          "required": false
+        },
+        {
+          "path": ".mcp.json",
+          "scope": "project",
+          "format": "json",
+          "required": false
+        }
+      ],
+      "supports": {
+        "skills": true,
+        "mcp": true,
+        "memory": true,
+        "customCommands": true,
+        "ignoreFile": false
+      },
+      "agentsMdCompatible": true,
+      "exampleSnippet": "# Project Instructions\n\n## Stack\nNext.js 14 + Prisma + Postgres.\n\n## Conventions\n- TypeScript strict mode\n- Functional components with hooks\n- Test files colocated as `*.test.ts`\n\n## Tools\nSee `~/.claude/skills/` for installed skills and `.mcp.json` for MCP servers.\n",
+      "notes": "Skills live in ~/.claude/skills/ (global) or .claude/skills/ (project).\nMCP servers configured via .mcp.json or ~/.claude/settings.json.\nReads CLAUDE.md hierarchically from cwd up to home dir.\n"
+    },
+    {
+      "id": "cline",
+      "name": "Cline",
+      "vendor": "Cline Bot Inc.",
+      "homepage": "https://cline.bot",
+      "docsUrl": "https://docs.cline.bot/features/cline-rules",
+      "configFiles": [
+        {
+          "path": ".clinerules/main.md",
+          "scope": "project",
+          "format": "markdown",
+          "required": true
+        },
+        {
+          "path": "~/.cline/rules/main.md",
+          "scope": "global",
+          "format": "markdown",
+          "required": false
+        }
+      ],
+      "supports": {
+        "skills": false,
+        "mcp": true,
+        "memory": false,
+        "customCommands": false,
+        "ignoreFile": true
+      },
+      "agentsMdCompatible": false,
+      "exampleSnippet": "---\ndescription: \"Project rules\"\npaths: [\"src/**\"]\n---\n# Rules\n\nUse TypeScript strict mode. Prefer functional patterns.\nNever commit `.env` or secrets.\n",
+      "notes": ".clinerules can be a single file or a directory of files. Each file may have YAML frontmatter.\nStrong MCP support; reads .clineignore for files to skip.\n"
+    },
+    {
+      "id": "codex",
+      "name": "Codex CLI",
+      "vendor": "OpenAI",
+      "homepage": "https://openai.com/codex",
+      "docsUrl": "https://developers.openai.com/codex/guides/agents-md",
+      "configFiles": [
+        {
+          "path": "AGENTS.md",
+          "scope": "project",
+          "format": "markdown",
+          "required": true
+        },
+        {
+          "path": "~/.codex/AGENTS.md",
+          "scope": "global",
+          "format": "markdown",
+          "required": false
+        },
+        {
+          "path": "~/.codex/config.toml",
+          "scope": "global",
+          "format": "toml",
+          "required": false
+        }
+      ],
+      "supports": {
+        "skills": false,
+        "mcp": true,
+        "memory": true,
+        "customCommands": false,
+        "ignoreFile": false
+      },
+      "agentsMdCompatible": true,
+      "exampleSnippet": "# Project\n\n## Setup\n`pnpm install && pnpm dev`\n\n## Testing\n`pnpm test` runs Vitest. Integration tests under `test/integration/`.\n\n## Code style\nTypeScript strict. ESLint config in repo root.\n",
+      "notes": "AGENTS.md is the canonical config file. Codex was the original driver of the AGENTS.md open standard.\n"
+    },
+    {
+      "id": "continue",
+      "name": "Continue",
+      "vendor": "Continue Dev Inc.",
+      "homepage": "https://continue.dev",
+      "docsUrl": "https://docs.continue.dev/reference",
+      "configFiles": [
+        {
+          "path": ".continue/config.yaml",
+          "scope": "project",
+          "format": "yaml",
+          "required": true
+        },
+        {
+          "path": "~/.continue/config.yaml",
+          "scope": "global",
+          "format": "yaml",
+          "required": false
+        }
+      ],
+      "supports": {
+        "skills": false,
+        "mcp": true,
+        "memory": false,
+        "customCommands": true,
+        "ignoreFile": false
+      },
+      "agentsMdCompatible": false,
+      "exampleSnippet": "name: my-project\nversion: 0.0.1\nschema: v1\nrules:\n  - \"Use TypeScript for all new files\"\n  - \"Keep functions under 50 lines\"\nmodels:\n  - name: Claude Opus\n    provider: anthropic\n    model: claude-opus-4-20250514\n",
+      "notes": "Continue migrated from config.json to config.yaml in 2025. Both still supported.\nCustom commands defined inline in config; MCP via mcpServers block.\n"
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "vendor": "Anysphere",
+      "homepage": "https://cursor.com",
+      "docsUrl": "https://docs.cursor.com/context/rules",
+      "configFiles": [
+        {
+          "path": ".cursor/rules/main.mdc",
+          "scope": "project",
+          "format": "mdc",
+          "required": true
+        },
+        {
+          "path": ".cursorrules",
+          "scope": "project",
+          "format": "plaintext",
+          "required": false
+        }
+      ],
+      "supports": {
+        "skills": false,
+        "mcp": true,
+        "memory": false,
+        "customCommands": false,
+        "ignoreFile": true
+      },
+      "agentsMdCompatible": true,
+      "exampleSnippet": "---\ndescription: \"React component conventions\"\nglobs: [\"src/components/**/*.tsx\"]\nalwaysApply: false\n---\nUse functional components with hooks. No class components.\nDefault exports for components, named exports for utilities.\n",
+      "notes": ".cursorrules is legacy but still read. New projects should use .cursor/rules/*.mdc.\nSupports MCP via Cursor Settings > MCP. AGENTS.md is read as a fallback.\n"
+    },
+    {
+      "id": "gemini-cli",
+      "name": "Gemini CLI",
+      "vendor": "Google",
+      "homepage": "https://github.com/google-gemini/gemini-cli",
+      "docsUrl": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/configuration.md",
+      "configFiles": [
+        {
+          "path": "GEMINI.md",
+          "scope": "project",
+          "format": "markdown",
+          "required": true
+        },
+        {
+          "path": "~/.gemini/GEMINI.md",
+          "scope": "global",
+          "format": "markdown",
+          "required": false
+        },
+        {
+          "path": "~/.gemini/settings.json",
+          "scope": "global",
+          "format": "json",
+          "required": false
+        }
+      ],
+      "supports": {
+        "skills": false,
+        "mcp": true,
+        "memory": true,
+        "customCommands": false,
+        "ignoreFile": false
+      },
+      "agentsMdCompatible": true,
+      "exampleSnippet": "# Project: TypeScript Library\n\n## Coding Style\n- Use 2 spaces, strict mode\n- Interface names prefixed with `I`\n\n## References\n@./style-guide.md\n",
+      "notes": "GEMINI.md supports `@./path` imports to pull in additional context files.\nMCP servers configured via ~/.gemini/settings.json.\n"
+    },
+    {
+      "id": "openhands",
+      "name": "OpenHands",
+      "vendor": "All Hands AI",
+      "homepage": "https://github.com/All-Hands-AI/OpenHands",
+      "docsUrl": "https://docs.all-hands.dev",
+      "configFiles": [
+        {
+          "path": ".openhands/microagents/repo.md",
+          "scope": "project",
+          "format": "markdown",
+          "required": true
+        },
+        {
+          "path": ".openhands/microagents/keyword.md",
+          "scope": "project",
+          "format": "markdown",
+          "required": false
+        }
+      ],
+      "supports": {
+        "skills": false,
+        "mcp": true,
+        "memory": false,
+        "customCommands": true,
+        "ignoreFile": false
+      },
+      "agentsMdCompatible": false,
+      "exampleSnippet": "---\nname: repo-conventions\nagent: CodeActAgent\n---\nThis repo uses pnpm workspaces. Always run `pnpm install` from root.\nTests use Vitest. Lint with ESLint + Prettier.\n",
+      "notes": "OpenHands uses \"microagents\" — markdown files with YAML frontmatter. Repo-wide ones live\nin .openhands/microagents/repo.md; keyword-triggered ones in keyword.md.\nMCP support is current; was previously planned-only.\n"
+    },
+    {
+      "id": "windsurf",
+      "name": "Windsurf",
+      "vendor": "Codeium",
+      "homepage": "https://windsurf.com",
+      "docsUrl": "https://docs.windsurf.com/windsurf/cascade/memories",
+      "configFiles": [
+        {
+          "path": ".windsurfrules",
+          "scope": "project",
+          "format": "plaintext",
+          "required": true
+        },
+        {
+          "path": "~/.codeium/windsurf/memories/global_rules.md",
+          "scope": "global",
+          "format": "markdown",
+          "required": false
+        },
+        {
+          "path": ".windsurf/rules/main.md",
+          "scope": "project",
+          "format": "markdown",
+          "required": false
+        }
+      ],
+      "supports": {
+        "skills": false,
+        "mcp": true,
+        "memory": true,
+        "customCommands": false,
+        "ignoreFile": true
+      },
+      "agentsMdCompatible": true,
+      "exampleSnippet": "Project: Full-stack React + Node\nCode style: ESLint config in repo root\nDatabase: Postgres via Prisma — never write raw SQL outside migrations\nTests: Vitest, colocated as `*.test.ts`\n",
+      "notes": ".windsurfrules is plaintext. Newer .windsurf/rules/ directory supports Markdown with frontmatter.\nReads AGENTS.md as a fallback.\n"
+    },
+    {
+      "id": "zed",
+      "name": "Zed",
+      "vendor": "Zed Industries",
+      "homepage": "https://zed.dev",
+      "docsUrl": "https://zed.dev/docs/ai/rules",
+      "configFiles": [
+        {
+          "path": ".rules",
+          "scope": "project",
+          "format": "plaintext",
+          "required": true
+        },
+        {
+          "path": "AGENTS.md",
+          "scope": "project",
+          "format": "markdown",
+          "required": false
+        },
+        {
+          "path": ".zed/settings.json",
+          "scope": "project",
+          "format": "json",
+          "required": false
+        }
+      ],
+      "supports": {
+        "skills": false,
+        "mcp": true,
+        "memory": false,
+        "customCommands": false,
+        "ignoreFile": false
+      },
+      "agentsMdCompatible": true,
+      "exampleSnippet": "Project conventions:\n- TypeScript strict mode\n- Tests required for new modules\n- Use pnpm, never npm\n",
+      "notes": "Zed reads many file formats in priority order: .rules, .cursorrules, .windsurfrules,\n.clinerules, AGENT.md, AGENTS.md, CLAUDE.md, GEMINI.md, .github/copilot-instructions.md.\nWe default to .rules; AGENTS.md is also picked up.\n"
+    }
+  ],
+  "stacks": [
+    {
+      "id": "fastapi-postgres",
+      "name": "FastAPI + Postgres",
+      "description": "Python FastAPI backend with SQLAlchemy and Postgres. Suits API-first services and AI/ML backends.",
+      "tags": [
+        "python",
+        "fastapi",
+        "postgres",
+        "backend"
+      ],
+      "recommendedSkills": [
+        "testing-pytest",
+        "lint-ruff",
+        "docs-mkdocs",
+        "db-alembic",
+        "api-openapi"
+      ],
+      "recommendedMcps": [
+        "github",
+        "postgres",
+        "filesystem",
+        "sentry"
+      ],
+      "conventions": [
+        "Python 3.11+ with type hints on every function signature.",
+        "Pydantic v2 for request/response schemas.",
+        "Alembic for database migrations; never alter schema by hand.",
+        "Ruff for lint+format, mypy for type checking.",
+        "Tests with pytest, fixtures in conftest.py, factory-boy for test data."
+      ]
+    },
+    {
+      "id": "mobile-expo",
+      "name": "Mobile (Expo + React Native)",
+      "description": "Cross-platform mobile app with Expo and React Native. Suits prototypes and small teams shipping to iOS+Android from one codebase.",
+      "tags": [
+        "mobile",
+        "expo",
+        "react-native",
+        "typescript"
+      ],
+      "recommendedSkills": [
+        "testing-vitest",
+        "lint-eslint-prettier",
+        "frontend-tailwind",
+        "mobile-expo-router"
+      ],
+      "recommendedMcps": [
+        "github",
+        "filesystem",
+        "sentry"
+      ],
+      "conventions": [
+        "Expo SDK (managed workflow) unless a feature truly requires bare workflow.",
+        "expo-router for file-based navigation.",
+        "TypeScript strict; React Native Paper or NativeWind for UI.",
+        "EAS Build for distribution, EAS Update for OTA updates.",
+        "Test on physical devices before merging; simulator is not enough."
+      ]
+    },
+    {
+      "id": "nextjs-prisma",
+      "name": "Next.js + Prisma + Postgres",
+      "description": "Next.js App Router with Prisma ORM and Postgres. Suits production web apps that need auth, DB, and SSR.",
+      "tags": [
+        "nextjs",
+        "prisma",
+        "postgres",
+        "typescript",
+        "fullstack"
+      ],
+      "recommendedSkills": [
+        "testing-vitest",
+        "lint-eslint-prettier",
+        "frontend-tailwind",
+        "auth-nextauth",
+        "db-prisma"
+      ],
+      "recommendedMcps": [
+        "github",
+        "postgres",
+        "filesystem",
+        "sentry",
+        "vercel"
+      ],
+      "conventions": [
+        "Next.js App Router only — no pages/ directory in new code.",
+        "Server Components by default; mark Client Components explicitly with 'use client'.",
+        "Database access goes through Prisma; never raw SQL outside migrations.",
+        "Environment variables typed via @t3-oss/env-nextjs or similar.",
+        "Tailwind for styling; component library is shadcn/ui."
+      ]
+    },
+    {
+      "id": "react-node",
+      "name": "React + Node",
+      "description": "Full-stack JavaScript with React frontend and Node.js backend (Express/Fastify). Default for SaaS prototypes and internal tools.",
+      "tags": [
+        "javascript",
+        "typescript",
+        "react",
+        "node",
+        "fullstack"
+      ],
+      "recommendedSkills": [
+        "testing-vitest",
+        "lint-eslint-prettier",
+        "docs-tsdoc",
+        "git-conventional-commits",
+        "frontend-tailwind"
+      ],
+      "recommendedMcps": [
+        "github",
+        "filesystem",
+        "postgres",
+        "puppeteer",
+        "sentry"
+      ],
+      "conventions": [
+        "Use TypeScript strict mode across both frontend and backend.",
+        "Prefer functional React components with hooks; no class components.",
+        "API routes return typed responses; share types from a /shared package.",
+        "Vitest for unit tests, Playwright for end-to-end.",
+        "ESLint + Prettier, formatted on save."
+      ]
+    },
+    {
+      "id": "rust-cli",
+      "name": "Rust CLI",
+      "description": "Rust command-line tool with clap and serde. Suits distributable binaries and systems tools.",
+      "tags": [
+        "rust",
+        "cli",
+        "systems"
+      ],
+      "recommendedSkills": [
+        "testing-cargo",
+        "lint-clippy",
+        "docs-rustdoc",
+        "release-cargo-dist"
+      ],
+      "recommendedMcps": [
+        "github",
+        "filesystem"
+      ],
+      "conventions": [
+        "Rust 2021 edition or later, MSRV declared in Cargo.toml.",
+        "clap for CLI parsing, anyhow for application errors, thiserror for library errors.",
+        "Tests with cargo test; integration tests under tests/.",
+        "Clippy clean — `cargo clippy --all-targets -- -D warnings`.",
+        "Release binaries via cargo-dist."
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "id": "testing-vitest",
+      "name": "Vitest Test Runner",
+      "description": "Helpers and patterns for writing fast Vitest tests in TypeScript projects.",
+      "sourceUrl": "https://vitest.dev",
+      "author": "Vitest core team",
+      "tags": [
+        "testing",
+        "javascript",
+        "typescript",
+        "vitest"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma",
+        "mobile-expo"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "testing-pytest",
+      "name": "Pytest Patterns",
+      "description": "Pytest fixtures, parametrize, factory-boy patterns for Python services.",
+      "sourceUrl": "https://docs.pytest.org",
+      "tags": [
+        "testing",
+        "python",
+        "pytest"
+      ],
+      "stacks": [
+        "fastapi-postgres"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "testing-cargo",
+      "name": "Cargo Test Patterns",
+      "description": "Patterns for unit tests, integration tests, and doc tests in Rust.",
+      "sourceUrl": "https://doc.rust-lang.org/book/ch11-00-testing.html",
+      "tags": [
+        "testing",
+        "rust"
+      ],
+      "stacks": [
+        "rust-cli"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "lint-eslint-prettier",
+      "name": "ESLint + Prettier Setup",
+      "description": "Opinionated lint and format config for TypeScript projects.",
+      "sourceUrl": "https://typescript-eslint.io",
+      "tags": [
+        "lint",
+        "javascript",
+        "typescript"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma",
+        "mobile-expo"
+      ],
+      "harnesses": [
+        "claude-code",
+        "cursor",
+        "cline"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "lint-ruff",
+      "name": "Ruff Lint + Format",
+      "description": "Fast Python linter and formatter (replaces flake8 + black + isort).",
+      "sourceUrl": "https://docs.astral.sh/ruff/",
+      "tags": [
+        "lint",
+        "python",
+        "ruff"
+      ],
+      "stacks": [
+        "fastapi-postgres"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "lint-clippy",
+      "name": "Clippy Lints",
+      "description": "Idiomatic Rust enforcement via Clippy. Treats warnings as errors.",
+      "sourceUrl": "https://github.com/rust-lang/rust-clippy",
+      "tags": [
+        "lint",
+        "rust"
+      ],
+      "stacks": [
+        "rust-cli"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "docs-tsdoc",
+      "name": "TSDoc Comments",
+      "description": "TSDoc conventions for type-aware JSDoc-like comments.",
+      "sourceUrl": "https://tsdoc.org",
+      "tags": [
+        "docs",
+        "typescript"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "docs-mkdocs",
+      "name": "MkDocs Material",
+      "description": "Documentation site generator for Python projects.",
+      "sourceUrl": "https://squidfunk.github.io/mkdocs-material/",
+      "tags": [
+        "docs",
+        "python"
+      ],
+      "stacks": [
+        "fastapi-postgres"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "docs-rustdoc",
+      "name": "Rustdoc Conventions",
+      "description": "Patterns for writing comprehensive rustdoc comments and examples.",
+      "sourceUrl": "https://doc.rust-lang.org/rustdoc/",
+      "tags": [
+        "docs",
+        "rust"
+      ],
+      "stacks": [
+        "rust-cli"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "git-conventional-commits",
+      "name": "Conventional Commits",
+      "description": "Commit message format (feat:, fix:, chore:, …) for automated changelogs.",
+      "sourceUrl": "https://www.conventionalcommits.org",
+      "tags": [
+        "git",
+        "conventions"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma",
+        "fastapi-postgres",
+        "rust-cli",
+        "mobile-expo"
+      ],
+      "harnesses": [],
+      "recommended": true
+    },
+    {
+      "id": "frontend-tailwind",
+      "name": "Tailwind CSS Patterns",
+      "description": "Utility-first CSS conventions and component composition with Tailwind.",
+      "sourceUrl": "https://tailwindcss.com",
+      "tags": [
+        "frontend",
+        "css",
+        "tailwind"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma",
+        "mobile-expo"
+      ],
+      "harnesses": [
+        "claude-code",
+        "cursor"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "auth-nextauth",
+      "name": "NextAuth.js (Auth.js)",
+      "description": "Authentication patterns with Auth.js v5 in Next.js App Router.",
+      "sourceUrl": "https://authjs.dev",
+      "tags": [
+        "auth",
+        "nextjs"
+      ],
+      "stacks": [
+        "nextjs-prisma"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "db-prisma",
+      "name": "Prisma ORM",
+      "description": "Schema design, migrations, and query patterns with Prisma.",
+      "sourceUrl": "https://www.prisma.io/docs",
+      "tags": [
+        "database",
+        "orm",
+        "prisma"
+      ],
+      "stacks": [
+        "nextjs-prisma",
+        "react-node"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "db-alembic",
+      "name": "Alembic Migrations",
+      "description": "SQLAlchemy migration patterns via Alembic.",
+      "sourceUrl": "https://alembic.sqlalchemy.org",
+      "tags": [
+        "database",
+        "python",
+        "alembic"
+      ],
+      "stacks": [
+        "fastapi-postgres"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "api-openapi",
+      "name": "OpenAPI Schema Discipline",
+      "description": "Patterns for keeping OpenAPI spec aligned with FastAPI/Pydantic models.",
+      "sourceUrl": "https://swagger.io/specification/",
+      "tags": [
+        "api",
+        "openapi",
+        "fastapi"
+      ],
+      "stacks": [
+        "fastapi-postgres"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "release-cargo-dist",
+      "name": "cargo-dist Releases",
+      "description": "Multi-platform binary releases for Rust CLIs.",
+      "sourceUrl": "https://github.com/axodotdev/cargo-dist",
+      "tags": [
+        "release",
+        "rust"
+      ],
+      "stacks": [
+        "rust-cli"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "mobile-expo-router",
+      "name": "Expo Router Patterns",
+      "description": "File-based routing patterns for Expo Router v3+.",
+      "sourceUrl": "https://docs.expo.dev/router/introduction/",
+      "tags": [
+        "mobile",
+        "expo",
+        "react-native"
+      ],
+      "stacks": [
+        "mobile-expo"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "review-pr-checklist",
+      "name": "PR Review Checklist",
+      "description": "Universal pre-merge checklist — types, tests, error paths, secrets.",
+      "sourceUrl": "https://github.com/anthropics/skills",
+      "tags": [
+        "review",
+        "quality"
+      ],
+      "stacks": [],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "security-secret-scan",
+      "name": "Secret Scanning Pre-commit",
+      "description": "Scan staged changes for API keys, tokens, .env leaks before commit.",
+      "sourceUrl": "https://github.com/Yelp/detect-secrets",
+      "tags": [
+        "security"
+      ],
+      "stacks": [],
+      "harnesses": [
+        "claude-code",
+        "cursor"
+      ],
+      "recommended": true
+    },
+    {
+      "id": "refactor-find-dead-code",
+      "name": "Dead Code Finder",
+      "description": "Locate unreferenced exports, files, and dependencies.",
+      "sourceUrl": "https://github.com/webpro-nl/knip",
+      "tags": [
+        "refactor",
+        "cleanup"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "spec-driven-dev",
+      "name": "Spec-Driven Development",
+      "description": "Patterns from github/spec-kit — spec → plan → tasks → code.",
+      "sourceUrl": "https://github.com/github/spec-kit",
+      "tags": [
+        "methodology",
+        "spec"
+      ],
+      "stacks": [],
+      "harnesses": [],
+      "recommended": false
+    },
+    {
+      "id": "debug-systematic",
+      "name": "Systematic Debugging",
+      "description": "Reproduce → isolate → diagnose → fix workflow.",
+      "sourceUrl": "https://github.com/anthropics/skills",
+      "tags": [
+        "debug"
+      ],
+      "stacks": [],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "docs-onboarding",
+      "name": "Onboarding Doc Generator",
+      "description": "Produce a teammate-readable ONBOARDING.md from repo scan.",
+      "sourceUrl": "https://github.com/anthropics/skills",
+      "tags": [
+        "docs",
+        "onboarding"
+      ],
+      "stacks": [],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "arch-adr",
+      "name": "ADR (Architecture Decision Record)",
+      "description": "Generate ADRs for design decisions (Kafka vs SQS, REST vs GraphQL, …).",
+      "sourceUrl": "https://adr.github.io",
+      "tags": [
+        "architecture",
+        "docs"
+      ],
+      "stacks": [],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "deploy-checklist",
+      "name": "Pre-Deploy Checklist",
+      "description": "CI green, migrations safe, feature flags ready, rollback plan documented.",
+      "sourceUrl": "https://github.com/anthropics/skills",
+      "tags": [
+        "deploy",
+        "release"
+      ],
+      "stacks": [],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "incident-response",
+      "name": "Incident Response Playbook",
+      "description": "Triage → comms → mitigation → postmortem flow.",
+      "sourceUrl": "https://github.com/anthropics/skills",
+      "tags": [
+        "incident",
+        "oncall"
+      ],
+      "stacks": [],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "testing-playwright",
+      "name": "Playwright End-to-End",
+      "description": "Browser end-to-end tests with Playwright. Trace viewer + parallel runs.",
+      "sourceUrl": "https://playwright.dev",
+      "tags": [
+        "testing",
+        "e2e"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "perf-lighthouse",
+      "name": "Lighthouse Performance Budgets",
+      "description": "Set and enforce Core Web Vitals budgets in CI.",
+      "sourceUrl": "https://github.com/GoogleChrome/lighthouse-ci",
+      "tags": [
+        "performance",
+        "web"
+      ],
+      "stacks": [
+        "nextjs-prisma",
+        "react-node"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "a11y-axe",
+      "name": "Accessibility (axe)",
+      "description": "Automated a11y checks with axe-core in tests and CI.",
+      "sourceUrl": "https://github.com/dequelabs/axe-core",
+      "tags": [
+        "accessibility",
+        "a11y"
+      ],
+      "stacks": [
+        "nextjs-prisma",
+        "react-node",
+        "mobile-expo"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    },
+    {
+      "id": "i18n-icu",
+      "name": "i18n with ICU MessageFormat",
+      "description": "Internationalization patterns with ICU message format and react-intl.",
+      "sourceUrl": "https://formatjs.io",
+      "tags": [
+        "i18n",
+        "localization"
+      ],
+      "stacks": [
+        "nextjs-prisma",
+        "react-node",
+        "mobile-expo"
+      ],
+      "harnesses": [
+        "claude-code"
+      ],
+      "recommended": false
+    }
+  ],
+  "mcps": [
+    {
+      "id": "github",
+      "name": "GitHub",
+      "description": "Repo, issue, PR, and Actions access via the GitHub API.",
+      "sourceUrl": "https://github.com/github/github-mcp-server",
+      "transport": "http",
+      "auth": "oauth",
+      "tags": [
+        "git",
+        "vcs",
+        "github"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma",
+        "fastapi-postgres",
+        "rust-cli",
+        "mobile-expo"
+      ],
+      "recommended": true,
+      "configSnippet": "{\n  \"github\": {\n    \"type\": \"http\",\n    \"url\": \"https://api.githubcopilot.com/mcp/\"\n  }\n}\n"
+    },
+    {
+      "id": "filesystem",
+      "name": "Filesystem",
+      "description": "Read, write, and search files within a configured root directory.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "files",
+        "local"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma",
+        "fastapi-postgres",
+        "rust-cli",
+        "mobile-expo"
+      ],
+      "recommended": true,
+      "configSnippet": "{\n  \"filesystem\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"/path/to/allowed/dir\"]\n  }\n}\n"
+    },
+    {
+      "id": "postgres",
+      "name": "Postgres",
+      "description": "Read-only SQL queries against a Postgres database.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres",
+      "transport": "stdio",
+      "auth": "basic",
+      "tags": [
+        "database",
+        "postgres",
+        "sql"
+      ],
+      "stacks": [
+        "nextjs-prisma",
+        "fastapi-postgres",
+        "react-node"
+      ],
+      "recommended": true,
+      "configSnippet": "{\n  \"postgres\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-postgres\", \"postgresql://user@host/db\"]\n  }\n}\n"
+    },
+    {
+      "id": "sqlite",
+      "name": "SQLite",
+      "description": "Query and inspect SQLite databases.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/sqlite",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "database",
+        "sqlite"
+      ],
+      "stacks": [
+        "rust-cli",
+        "react-node"
+      ],
+      "recommended": false,
+      "configSnippet": "{\n  \"sqlite\": {\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-server-sqlite\", \"--db-path\", \"./app.db\"]\n  }\n}\n"
+    },
+    {
+      "id": "puppeteer",
+      "name": "Puppeteer Browser",
+      "description": "Headless Chrome automation — navigate, click, screenshot, scrape.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "browser",
+        "scraping",
+        "automation"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma"
+      ],
+      "recommended": true,
+      "configSnippet": "{\n  \"puppeteer\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-puppeteer\"]\n  }\n}\n"
+    },
+    {
+      "id": "playwright",
+      "name": "Playwright Browser",
+      "description": "Cross-browser automation via Microsoft Playwright.",
+      "sourceUrl": "https://github.com/microsoft/playwright-mcp",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "browser",
+        "automation",
+        "testing"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma"
+      ],
+      "recommended": false,
+      "configSnippet": "{\n  \"playwright\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@playwright/mcp@latest\"]\n  }\n}\n"
+    },
+    {
+      "id": "sentry",
+      "name": "Sentry",
+      "description": "Query Sentry errors, issues, and releases.",
+      "sourceUrl": "https://github.com/getsentry/sentry-mcp",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "monitoring",
+        "errors"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma",
+        "fastapi-postgres",
+        "mobile-expo"
+      ],
+      "recommended": true,
+      "configSnippet": "{\n  \"sentry\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@sentry/mcp-server@latest\"],\n    \"env\": { \"SENTRY_AUTH_TOKEN\": \"$SENTRY_AUTH_TOKEN\" }\n  }\n}\n"
+    },
+    {
+      "id": "vercel",
+      "name": "Vercel",
+      "description": "Deploy status, project config, and env var management.",
+      "sourceUrl": "https://vercel.com/docs/mcp",
+      "transport": "http",
+      "auth": "oauth",
+      "tags": [
+        "deploy",
+        "hosting"
+      ],
+      "stacks": [
+        "nextjs-prisma"
+      ],
+      "recommended": true,
+      "configSnippet": "{\n  \"vercel\": {\n    \"type\": \"http\",\n    \"url\": \"https://mcp.vercel.com\"\n  }\n}\n"
+    },
+    {
+      "id": "slack",
+      "name": "Slack",
+      "description": "Post messages, search channels, manage threads.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/slack",
+      "transport": "stdio",
+      "auth": "oauth",
+      "tags": [
+        "communication",
+        "slack"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"slack\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-slack\"],\n    \"env\": { \"SLACK_BOT_TOKEN\": \"$SLACK_BOT_TOKEN\" }\n  }\n}\n"
+    },
+    {
+      "id": "linear",
+      "name": "Linear",
+      "description": "Read and manage Linear issues, projects, and cycles.",
+      "sourceUrl": "https://linear.app/docs/mcp",
+      "transport": "http",
+      "auth": "oauth",
+      "tags": [
+        "issues",
+        "projects",
+        "linear"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"linear\": {\n    \"type\": \"http\",\n    \"url\": \"https://mcp.linear.app/sse\"\n  }\n}\n"
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "description": "Read pages, databases, and create entries in Notion.",
+      "sourceUrl": "https://github.com/makenotion/notion-mcp-server",
+      "transport": "stdio",
+      "auth": "oauth",
+      "tags": [
+        "docs",
+        "knowledge-base",
+        "notion"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"notion\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@notionhq/notion-mcp-server\"]\n  }\n}\n"
+    },
+    {
+      "id": "atlassian",
+      "name": "Jira + Confluence",
+      "description": "Atlassian official MCP for Jira issues and Confluence pages.",
+      "sourceUrl": "https://www.atlassian.com/blog/announcements/remote-mcp-server",
+      "transport": "http",
+      "auth": "oauth",
+      "tags": [
+        "issues",
+        "docs",
+        "atlassian"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"atlassian\": {\n    \"type\": \"http\",\n    \"url\": \"https://mcp.atlassian.com/v1/sse\"\n  }\n}\n"
+    },
+    {
+      "id": "stripe",
+      "name": "Stripe",
+      "description": "Stripe Agent Toolkit MCP — payments, customers, subscriptions.",
+      "sourceUrl": "https://docs.stripe.com/agents",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "payments",
+        "stripe"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"stripe\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@stripe/mcp\", \"--tools=all\"],\n    \"env\": { \"STRIPE_SECRET_KEY\": \"$STRIPE_SECRET_KEY\" }\n  }\n}\n"
+    },
+    {
+      "id": "cloudflare",
+      "name": "Cloudflare",
+      "description": "Workers, KV, R2, D1, and DNS access via Cloudflare MCP.",
+      "sourceUrl": "https://github.com/cloudflare/mcp-server-cloudflare",
+      "transport": "http",
+      "auth": "oauth",
+      "tags": [
+        "hosting",
+        "cdn",
+        "cloudflare"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"cloudflare\": {\n    \"type\": \"http\",\n    \"url\": \"https://observability.mcp.cloudflare.com/sse\"\n  }\n}\n"
+    },
+    {
+      "id": "supabase",
+      "name": "Supabase",
+      "description": "Manage Supabase databases, auth, storage, and edge functions.",
+      "sourceUrl": "https://github.com/supabase-community/supabase-mcp",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "backend",
+        "database",
+        "supabase"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma"
+      ],
+      "recommended": false,
+      "configSnippet": "{\n  \"supabase\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@supabase/mcp-server-supabase@latest\"],\n    \"env\": { \"SUPABASE_ACCESS_TOKEN\": \"$SUPABASE_ACCESS_TOKEN\" }\n  }\n}\n"
+    },
+    {
+      "id": "aws",
+      "name": "AWS",
+      "description": "AWS API access — S3, Lambda, EC2, IAM, and more.",
+      "sourceUrl": "https://github.com/awslabs/mcp",
+      "transport": "stdio",
+      "auth": "basic",
+      "tags": [
+        "cloud",
+        "aws"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"aws\": {\n    \"command\": \"uvx\",\n    \"args\": [\"awslabs.aws-mcp-server\"]\n  }\n}\n"
+    },
+    {
+      "id": "gcp",
+      "name": "Google Cloud",
+      "description": "Google Cloud Platform API access via MCP.",
+      "sourceUrl": "https://github.com/GoogleCloudPlatform/mcp-toolbox",
+      "transport": "stdio",
+      "auth": "oauth",
+      "tags": [
+        "cloud",
+        "gcp"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"gcp\": {\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-toolbox-server\"]\n  }\n}\n"
+    },
+    {
+      "id": "azure",
+      "name": "Azure",
+      "description": "Azure resource management via MCP.",
+      "sourceUrl": "https://github.com/Azure/azure-mcp",
+      "transport": "stdio",
+      "auth": "oauth",
+      "tags": [
+        "cloud",
+        "azure"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"azure\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@azure/mcp@latest\", \"server\", \"start\"]\n  }\n}\n"
+    },
+    {
+      "id": "brave-search",
+      "name": "Brave Search",
+      "description": "Web search via Brave Search API.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "search",
+        "web"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"brave-search\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-brave-search\"],\n    \"env\": { \"BRAVE_API_KEY\": \"$BRAVE_API_KEY\" }\n  }\n}\n"
+    },
+    {
+      "id": "fetch",
+      "name": "Fetch",
+      "description": "Fetch arbitrary URLs and convert HTML to Markdown for the LLM.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "web",
+        "fetch"
+      ],
+      "stacks": [],
+      "recommended": true,
+      "configSnippet": "{\n  \"fetch\": {\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-server-fetch\"]\n  }\n}\n"
+    },
+    {
+      "id": "memory",
+      "name": "Memory (Knowledge Graph)",
+      "description": "Persistent knowledge-graph memory across sessions.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "memory",
+        "persistence"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"memory\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-memory\"]\n  }\n}\n"
+    },
+    {
+      "id": "sequential-thinking",
+      "name": "Sequential Thinking",
+      "description": "Step-by-step reasoning helper that branches and revises thought chains.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "reasoning",
+        "planning"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"sequential-thinking\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-sequential-thinking\"]\n  }\n}\n"
+    },
+    {
+      "id": "time",
+      "name": "Time",
+      "description": "Timezone conversion and current-time queries.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/time",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "utility",
+        "time"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"time\": {\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-server-time\"]\n  }\n}\n"
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "description": "Read git history, diffs, and branches via MCP.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/git",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "git",
+        "vcs"
+      ],
+      "stacks": [],
+      "recommended": true,
+      "configSnippet": "{\n  \"git\": {\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-server-git\", \"--repository\", \".\"]\n  }\n}\n"
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "description": "Manage Docker containers, images, and compose stacks.",
+      "sourceUrl": "https://github.com/QuantGeekDev/docker-mcp",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "docker",
+        "devops"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"docker\": {\n    \"command\": \"uvx\",\n    \"args\": [\"docker-mcp\"]\n  }\n}\n"
+    },
+    {
+      "id": "kubernetes",
+      "name": "Kubernetes",
+      "description": "Read pods, deployments, logs from a configured kube context.",
+      "sourceUrl": "https://github.com/Flux159/mcp-server-kubernetes",
+      "transport": "stdio",
+      "auth": "basic",
+      "tags": [
+        "kubernetes",
+        "devops"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"kubernetes\": {\n    \"command\": \"npx\",\n    \"args\": [\"mcp-server-kubernetes\"]\n  }\n}\n"
+    },
+    {
+      "id": "figma",
+      "name": "Figma",
+      "description": "Read Figma files, frames, and components.",
+      "sourceUrl": "https://github.com/GLips/Figma-Context-MCP",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "design",
+        "figma"
+      ],
+      "stacks": [
+        "react-node",
+        "nextjs-prisma",
+        "mobile-expo"
+      ],
+      "recommended": false,
+      "configSnippet": "{\n  \"figma\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"figma-developer-mcp\", \"--stdio\"],\n    \"env\": { \"FIGMA_API_KEY\": \"$FIGMA_API_KEY\" }\n  }\n}\n"
+    },
+    {
+      "id": "pdf-reader",
+      "name": "PDF Reader",
+      "description": "Read and extract text and tables from PDFs.",
+      "sourceUrl": "https://github.com/MeterLong/MCP-Doc",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "pdf",
+        "document"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"pdf-reader\": {\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-doc\"]\n  }\n}\n"
+    },
+    {
+      "id": "e2b",
+      "name": "E2B Code Interpreter",
+      "description": "Run untrusted code in an E2B cloud sandbox.",
+      "sourceUrl": "https://github.com/e2b-dev/mcp-server",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "sandbox",
+        "code-execution"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"e2b\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@e2b/mcp-server\"],\n    \"env\": { \"E2B_API_KEY\": \"$E2B_API_KEY\" }\n  }\n}\n"
+    },
+    {
+      "id": "redis",
+      "name": "Redis",
+      "description": "Read/write Redis keys, lists, and pubsub.",
+      "sourceUrl": "https://github.com/redis/mcp-redis",
+      "transport": "stdio",
+      "auth": "basic",
+      "tags": [
+        "database",
+        "cache",
+        "redis"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"redis\": {\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-server-redis\", \"redis://localhost:6379\"]\n  }\n}\n"
+    },
+    {
+      "id": "mongodb",
+      "name": "MongoDB",
+      "description": "Query and inspect MongoDB collections.",
+      "sourceUrl": "https://github.com/mongodb-js/mongodb-mcp-server",
+      "transport": "stdio",
+      "auth": "basic",
+      "tags": [
+        "database",
+        "mongodb"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"mongodb\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"mongodb-mcp-server\"]\n  }\n}\n"
+    },
+    {
+      "id": "elasticsearch",
+      "name": "Elasticsearch",
+      "description": "Search and query Elasticsearch indices.",
+      "sourceUrl": "https://github.com/elastic/mcp-server-elasticsearch",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "search",
+        "elasticsearch"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"elasticsearch\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@elastic/mcp-server-elasticsearch\"]\n  }\n}\n"
+    },
+    {
+      "id": "clickhouse",
+      "name": "ClickHouse",
+      "description": "Query ClickHouse analytical databases.",
+      "sourceUrl": "https://github.com/ClickHouse/mcp-clickhouse",
+      "transport": "stdio",
+      "auth": "basic",
+      "tags": [
+        "database",
+        "analytics",
+        "clickhouse"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"clickhouse\": {\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-clickhouse\"]\n  }\n}\n"
+    },
+    {
+      "id": "bigquery",
+      "name": "BigQuery",
+      "description": "Query Google BigQuery datasets.",
+      "sourceUrl": "https://github.com/LucasHild/mcp-server-bigquery",
+      "transport": "stdio",
+      "auth": "oauth",
+      "tags": [
+        "database",
+        "analytics",
+        "gcp"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"bigquery\": {\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-server-bigquery\"]\n  }\n}\n"
+    },
+    {
+      "id": "posthog",
+      "name": "PostHog",
+      "description": "Query PostHog analytics, feature flags, and session replays.",
+      "sourceUrl": "https://github.com/posthog/posthog-mcp",
+      "transport": "http",
+      "auth": "api-key",
+      "tags": [
+        "analytics",
+        "product"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"posthog\": {\n    \"type\": \"http\",\n    \"url\": \"https://app.posthog.com/mcp\"\n  }\n}\n"
+    },
+    {
+      "id": "prometheus",
+      "name": "Prometheus",
+      "description": "Query Prometheus metrics.",
+      "sourceUrl": "https://github.com/pab1it0/prometheus-mcp-server",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "monitoring",
+        "metrics"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"prometheus\": {\n    \"command\": \"uvx\",\n    \"args\": [\"prometheus-mcp-server\"]\n  }\n}\n"
+    },
+    {
+      "id": "grafana",
+      "name": "Grafana",
+      "description": "Read Grafana dashboards, alerts, and Loki/Tempo queries.",
+      "sourceUrl": "https://github.com/grafana/mcp-grafana",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "monitoring",
+        "dashboards"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"grafana\": {\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-grafana\"]\n  }\n}\n"
+    },
+    {
+      "id": "datadog",
+      "name": "Datadog",
+      "description": "Query Datadog metrics, logs, and incidents.",
+      "sourceUrl": "https://github.com/winor30/mcp-server-datadog",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "monitoring",
+        "datadog"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"datadog\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@winor30/mcp-server-datadog\"]\n  }\n}\n"
+    },
+    {
+      "id": "pagerduty",
+      "name": "PagerDuty",
+      "description": "Query incidents, schedules, and on-call rotations.",
+      "sourceUrl": "https://github.com/wpfleger96/pagerduty-mcp-server",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "oncall",
+        "incidents"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"pagerduty\": {\n    \"command\": \"uvx\",\n    \"args\": [\"pagerduty-mcp-server\"]\n  }\n}\n"
+    },
+    {
+      "id": "gitlab",
+      "name": "GitLab",
+      "description": "Issues, MRs, and pipelines via the GitLab API.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/gitlab",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "git",
+        "vcs",
+        "gitlab"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"gitlab\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-gitlab\"],\n    \"env\": { \"GITLAB_PERSONAL_ACCESS_TOKEN\": \"$GITLAB_TOKEN\" }\n  }\n}\n"
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube",
+      "description": "Search YouTube and fetch transcripts.",
+      "sourceUrl": "https://github.com/anaisbetts/mcp-youtube",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "video",
+        "search"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"youtube\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@anaisbetts/mcp-youtube\"]\n  }\n}\n"
+    },
+    {
+      "id": "discord",
+      "name": "Discord",
+      "description": "Read channels and send messages via Discord bot.",
+      "sourceUrl": "https://github.com/v-3/discordmcp",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "communication",
+        "discord"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"discord\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@v3/discord-mcp\"],\n    \"env\": { \"DISCORD_TOKEN\": \"$DISCORD_TOKEN\" }\n  }\n}\n"
+    },
+    {
+      "id": "gmail",
+      "name": "Gmail",
+      "description": "Read, search, and send Gmail messages.",
+      "sourceUrl": "https://github.com/GongRzhe/Gmail-MCP-Server",
+      "transport": "stdio",
+      "auth": "oauth",
+      "tags": [
+        "email",
+        "gmail",
+        "google"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"gmail\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@gongrzhe/server-gmail-autoauth-mcp\"]\n  }\n}\n"
+    },
+    {
+      "id": "google-calendar",
+      "name": "Google Calendar",
+      "description": "Read and create events in Google Calendar.",
+      "sourceUrl": "https://github.com/nspady/google-calendar-mcp",
+      "transport": "stdio",
+      "auth": "oauth",
+      "tags": [
+        "calendar",
+        "google"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"google-calendar\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"google-calendar-mcp\"]\n  }\n}\n"
+    },
+    {
+      "id": "google-drive",
+      "name": "Google Drive",
+      "description": "Read, search, and write files in Google Drive.",
+      "sourceUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/gdrive",
+      "transport": "stdio",
+      "auth": "oauth",
+      "tags": [
+        "files",
+        "google",
+        "gdrive"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"gdrive\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-gdrive\"]\n  }\n}\n"
+    },
+    {
+      "id": "airtable",
+      "name": "Airtable",
+      "description": "Read and write Airtable bases and records.",
+      "sourceUrl": "https://github.com/domdomegg/airtable-mcp-server",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "database",
+        "no-code",
+        "airtable"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"airtable\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"airtable-mcp-server\"],\n    \"env\": { \"AIRTABLE_API_KEY\": \"$AIRTABLE_API_KEY\" }\n  }\n}\n"
+    },
+    {
+      "id": "obsidian",
+      "name": "Obsidian",
+      "description": "Read and write notes in an Obsidian vault.",
+      "sourceUrl": "https://github.com/MarkusPfundstein/mcp-obsidian",
+      "transport": "stdio",
+      "auth": "api-key",
+      "tags": [
+        "notes",
+        "obsidian"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"obsidian\": {\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-obsidian\"]\n  }\n}\n"
+    },
+    {
+      "id": "applescript",
+      "name": "AppleScript",
+      "description": "Run AppleScript on macOS to control Notes, Mail, Calendar, etc.",
+      "sourceUrl": "https://github.com/peakmojo/applescript-mcp",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "macos",
+        "automation"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"applescript\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@peakmojo/applescript-mcp\"]\n  }\n}\n"
+    },
+    {
+      "id": "shell",
+      "name": "Shell",
+      "description": "Run shell commands in a configured working directory.",
+      "sourceUrl": "https://github.com/tumf/mcp-shell-server",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "shell",
+        "bash",
+        "automation"
+      ],
+      "stacks": [],
+      "recommended": false,
+      "configSnippet": "{\n  \"shell\": {\n    \"command\": \"uvx\",\n    \"args\": [\"mcp-shell-server\"]\n  }\n}\n"
+    },
+    {
+      "id": "openapi",
+      "name": "OpenAPI",
+      "description": "Auto-generate MCP tools from any OpenAPI 3.x spec.",
+      "sourceUrl": "https://github.com/janwilmake/openapi-mcp-server",
+      "transport": "stdio",
+      "auth": "none",
+      "tags": [
+        "api",
+        "openapi",
+        "integration"
+      ],
+      "stacks": [
+        "fastapi-postgres"
+      ],
+      "recommended": false,
+      "configSnippet": "{\n  \"openapi\": {\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"openapi-mcp-server\", \"https://api.example.com/openapi.json\"]\n  }\n}\n"
+    }
+  ]
+}

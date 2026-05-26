@@ -1,0 +1,9 @@
+{
+  "name": "@appblueprints/claude-skill",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Claude Code skill packaging for AppBlueprints. Drop into ~/.claude/skills/appblueprints/.",
+  "scripts": {
+    "install-local": "node scripts/install.mjs"
+  }
+}

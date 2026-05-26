@@ -1,0 +1,18 @@
+id: rust-cli
+name: Rust CLI
+description: Rust command-line tool with clap and serde. Suits distributable binaries and systems tools.
+tags: [rust, cli, systems]
+recommendedSkills:
+  - testing-cargo
+  - lint-clippy
+  - docs-rustdoc
+  - release-cargo-dist
+recommendedMcps:
+  - github
+  - filesystem
+conventions:
+  - "Rust 2021 edition or later, MSRV declared in Cargo.toml."
+  - "clap for CLI parsing, anyhow for application errors, thiserror for library errors."
+  - "Tests with cargo test; integration tests under tests/."
+  - "Clippy clean — `cargo clippy --all-targets -- -D warnings`."
+  - "Release binaries via cargo-dist."

@@ -1,0 +1,45 @@
+{
+  "name": "appblueprints-vscode",
+  "displayName": "AppBlueprints",
+  "description": "Multi-harness AI coding config generator. AGENTS.md, CLAUDE.md, .cursor/rules, skills + MCP bundles — for whichever AI coding tool you use.",
+  "version": "0.0.1",
+  "publisher": "philipposk",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["AI", "Other"],
+  "keywords": ["ai", "claude", "cursor", "codex", "agents.md", "claude.md", "mcp", "skills"],
+  "main": "./dist/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "appblueprints.init",
+        "title": "AppBlueprints: Init this workspace",
+        "category": "AppBlueprints"
+      },
+      {
+        "command": "appblueprints.openWeb",
+        "title": "AppBlueprints: Open web wizard",
+        "category": "AppBlueprints"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "vscode:prepublish": "pnpm build",
+    "package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "typescript": "^5.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/philipposk/AppBlueprints"
+  }
+}

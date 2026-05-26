@@ -1,0 +1,46 @@
+id: claude-code
+name: Claude Code
+vendor: Anthropic
+homepage: https://claude.com/code
+docsUrl: https://docs.claude.com/en/docs/claude-code/overview
+configFiles:
+  - path: CLAUDE.md
+    scope: project
+    format: markdown
+    required: true
+  - path: ~/.claude/CLAUDE.md
+    scope: global
+    format: markdown
+    required: false
+  - path: .claude/settings.json
+    scope: project
+    format: json
+    required: false
+  - path: .mcp.json
+    scope: project
+    format: json
+    required: false
+supports:
+  skills: true
+  mcp: true
+  memory: true
+  customCommands: true
+  ignoreFile: false
+agentsMdCompatible: true
+exampleSnippet: |
+  # Project Instructions
+
+  ## Stack
+  Next.js 14 + Prisma + Postgres.
+
+  ## Conventions
+  - TypeScript strict mode
+  - Functional components with hooks
+  - Test files colocated as `*.test.ts`
+
+  ## Tools
+  See `~/.claude/skills/` for installed skills and `.mcp.json` for MCP servers.
+notes: |
+  Skills live in ~/.claude/skills/ (global) or .claude/skills/ (project).
+  MCP servers configured via .mcp.json or ~/.claude/settings.json.
+  Reads CLAUDE.md hierarchically from cwd up to home dir.

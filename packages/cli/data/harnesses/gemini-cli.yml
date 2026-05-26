@@ -1,0 +1,37 @@
+id: gemini-cli
+name: Gemini CLI
+vendor: Google
+homepage: https://github.com/google-gemini/gemini-cli
+docsUrl: https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/configuration.md
+configFiles:
+  - path: GEMINI.md
+    scope: project
+    format: markdown
+    required: true
+  - path: ~/.gemini/GEMINI.md
+    scope: global
+    format: markdown
+    required: false
+  - path: ~/.gemini/settings.json
+    scope: global
+    format: json
+    required: false
+supports:
+  skills: false
+  mcp: true
+  memory: true
+  customCommands: false
+  ignoreFile: false
+agentsMdCompatible: true
+exampleSnippet: |
+  # Project: TypeScript Library
+
+  ## Coding Style
+  - Use 2 spaces, strict mode
+  - Interface names prefixed with `I`
+
+  ## References
+  @./style-guide.md
+notes: |
+  GEMINI.md supports `@./path` imports to pull in additional context files.
+  MCP servers configured via ~/.gemini/settings.json.

@@ -1,0 +1,19 @@
+id: mobile-expo
+name: Mobile (Expo + React Native)
+description: Cross-platform mobile app with Expo and React Native. Suits prototypes and small teams shipping to iOS+Android from one codebase.
+tags: [mobile, expo, react-native, typescript]
+recommendedSkills:
+  - testing-vitest
+  - lint-eslint-prettier
+  - frontend-tailwind
+  - mobile-expo-router
+recommendedMcps:
+  - github
+  - filesystem
+  - sentry
+conventions:
+  - "Expo SDK (managed workflow) unless a feature truly requires bare workflow."
+  - "expo-router for file-based navigation."
+  - "TypeScript strict; React Native Paper or NativeWind for UI."
+  - "EAS Build for distribution, EAS Update for OTA updates."
+  - "Test on physical devices before merging; simulator is not enough."

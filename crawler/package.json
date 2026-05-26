@@ -1,0 +1,22 @@
+{
+  "name": "@appblueprints/crawler",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Nightly crawler that fetches new MCP servers and Claude skills from upstream awesome-lists and the GitHub Search API, diffs against data/, and writes candidate YAML.",
+  "type": "module",
+  "scripts": {
+    "crawl": "tsx src/run.ts",
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@appblueprints/core": "workspace:*",
+    "yaml": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}

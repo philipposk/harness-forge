@@ -1,0 +1,33 @@
+id: cline
+name: Cline
+vendor: Cline Bot Inc.
+homepage: https://cline.bot
+docsUrl: https://docs.cline.bot/features/cline-rules
+configFiles:
+  - path: .clinerules/main.md
+    scope: project
+    format: markdown
+    required: true
+  - path: ~/.cline/rules/main.md
+    scope: global
+    format: markdown
+    required: false
+supports:
+  skills: false
+  mcp: true
+  memory: false
+  customCommands: false
+  ignoreFile: true
+agentsMdCompatible: false
+exampleSnippet: |
+  ---
+  description: "Project rules"
+  paths: ["src/**"]
+  ---
+  # Rules
+
+  Use TypeScript strict mode. Prefer functional patterns.
+  Never commit `.env` or secrets.
+notes: |
+  .clinerules can be a single file or a directory of files. Each file may have YAML frontmatter.
+  Strong MCP support; reads .clineignore for files to skip.

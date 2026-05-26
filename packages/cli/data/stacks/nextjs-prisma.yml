@@ -1,0 +1,22 @@
+id: nextjs-prisma
+name: Next.js + Prisma + Postgres
+description: Next.js App Router with Prisma ORM and Postgres. Suits production web apps that need auth, DB, and SSR.
+tags: [nextjs, prisma, postgres, typescript, fullstack]
+recommendedSkills:
+  - testing-vitest
+  - lint-eslint-prettier
+  - frontend-tailwind
+  - auth-nextauth
+  - db-prisma
+recommendedMcps:
+  - github
+  - postgres
+  - filesystem
+  - sentry
+  - vercel
+conventions:
+  - "Next.js App Router only — no pages/ directory in new code."
+  - "Server Components by default; mark Client Components explicitly with 'use client'."
+  - "Database access goes through Prisma; never raw SQL outside migrations."
+  - "Environment variables typed via @t3-oss/env-nextjs or similar."
+  - "Tailwind for styling; component library is shadcn/ui."

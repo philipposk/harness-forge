@@ -1,0 +1,34 @@
+id: zed
+name: Zed
+vendor: Zed Industries
+homepage: https://zed.dev
+docsUrl: https://zed.dev/docs/ai/rules
+configFiles:
+  - path: .rules
+    scope: project
+    format: plaintext
+    required: true
+  - path: AGENTS.md
+    scope: project
+    format: markdown
+    required: false
+  - path: .zed/settings.json
+    scope: project
+    format: json
+    required: false
+supports:
+  skills: false
+  mcp: true
+  memory: false
+  customCommands: false
+  ignoreFile: false
+agentsMdCompatible: true
+exampleSnippet: |
+  Project conventions:
+  - TypeScript strict mode
+  - Tests required for new modules
+  - Use pnpm, never npm
+notes: |
+  Zed reads many file formats in priority order: .rules, .cursorrules, .windsurfrules,
+  .clinerules, AGENT.md, AGENTS.md, CLAUDE.md, GEMINI.md, .github/copilot-instructions.md.
+  We default to .rules; AGENTS.md is also picked up.

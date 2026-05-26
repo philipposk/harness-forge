@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "appblueprints"
+version = "0.0.1"
+description = "Multi-harness AI coding config generator. Python wrapper around the AppBlueprints npm CLI."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Philippos Ktistakis" }]
+requires-python = ">=3.9"
+keywords = [
+  "ai",
+  "claude",
+  "cursor",
+  "codex",
+  "agents.md",
+  "claude.md",
+  "scaffold",
+  "mcp",
+  "skills",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = []
+
+[project.scripts]
+appblueprints = "appblueprints.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/philipposk/AppBlueprints"
+Repository = "https://github.com/philipposk/AppBlueprints"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/appblueprints"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/appblueprints", "README.md", "pyproject.toml"]

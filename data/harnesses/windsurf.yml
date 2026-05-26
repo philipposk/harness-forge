@@ -1,0 +1,33 @@
+id: windsurf
+name: Windsurf
+vendor: Codeium
+homepage: https://windsurf.com
+docsUrl: https://docs.windsurf.com/windsurf/cascade/memories
+configFiles:
+  - path: .windsurfrules
+    scope: project
+    format: plaintext
+    required: true
+  - path: ~/.codeium/windsurf/memories/global_rules.md
+    scope: global
+    format: markdown
+    required: false
+  - path: .windsurf/rules/main.md
+    scope: project
+    format: markdown
+    required: false
+supports:
+  skills: false
+  mcp: true
+  memory: true
+  customCommands: false
+  ignoreFile: true
+agentsMdCompatible: true
+exampleSnippet: |
+  Project: Full-stack React + Node
+  Code style: ESLint config in repo root
+  Database: Postgres via Prisma — never write raw SQL outside migrations
+  Tests: Vitest, colocated as `*.test.ts`
+notes: |
+  .windsurfrules is plaintext. Newer .windsurf/rules/ directory supports Markdown with frontmatter.
+  Reads AGENTS.md as a fallback.

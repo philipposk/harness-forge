@@ -1,0 +1,26 @@
+{
+  "name": "appblueprints-monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Multi-harness AI coding config generator: AGENTS.md, CLAUDE.md, .cursor/rules, skills, MCP bundles.",
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "validate-data": "pnpm --filter @appblueprints/core test",
+    "build-awesome": "pnpm --filter @appblueprints/core build && node scripts/build-awesome.mjs"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/philipposk/AppBlueprints"
+  },
+  "license": "MIT"
+}

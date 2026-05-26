@@ -1,0 +1,32 @@
+id: cursor
+name: Cursor
+vendor: Anysphere
+homepage: https://cursor.com
+docsUrl: https://docs.cursor.com/context/rules
+configFiles:
+  - path: .cursor/rules/main.mdc
+    scope: project
+    format: mdc
+    required: true
+  - path: .cursorrules
+    scope: project
+    format: plaintext
+    required: false
+supports:
+  skills: false
+  mcp: true
+  memory: false
+  customCommands: false
+  ignoreFile: true
+agentsMdCompatible: true
+exampleSnippet: |
+  ---
+  description: "React component conventions"
+  globs: ["src/components/**/*.tsx"]
+  alwaysApply: false
+  ---
+  Use functional components with hooks. No class components.
+  Default exports for components, named exports for utilities.
+notes: |
+  .cursorrules is legacy but still read. New projects should use .cursor/rules/*.mdc.
+  Supports MCP via Cursor Settings > MCP. AGENTS.md is read as a fallback.

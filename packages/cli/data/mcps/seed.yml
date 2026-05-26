@@ -1,0 +1,862 @@
+# Seed MCP servers. Each entry must match @appblueprints/core McpEntry schema.
+# Sources: modelcontextprotocol/servers, mcp-awesome.com, wong2/awesome-mcp-servers.
+
+- id: github
+  name: GitHub
+  description: Repo, issue, PR, and Actions access via the GitHub API.
+  sourceUrl: https://github.com/github/github-mcp-server
+  transport: http
+  auth: oauth
+  tags: [git, vcs, github]
+  stacks: [react-node, nextjs-prisma, fastapi-postgres, rust-cli, mobile-expo]
+  recommended: true
+  configSnippet: |
+    {
+      "github": {
+        "type": "http",
+        "url": "https://api.githubcopilot.com/mcp/"
+      }
+    }
+
+- id: filesystem
+  name: Filesystem
+  description: Read, write, and search files within a configured root directory.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem
+  transport: stdio
+  auth: none
+  tags: [files, local]
+  stacks: [react-node, nextjs-prisma, fastapi-postgres, rust-cli, mobile-expo]
+  recommended: true
+  configSnippet: |
+    {
+      "filesystem": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/dir"]
+      }
+    }
+
+- id: postgres
+  name: Postgres
+  description: Read-only SQL queries against a Postgres database.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/postgres
+  transport: stdio
+  auth: basic
+  tags: [database, postgres, sql]
+  stacks: [nextjs-prisma, fastapi-postgres, react-node]
+  recommended: true
+  configSnippet: |
+    {
+      "postgres": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user@host/db"]
+      }
+    }
+
+- id: sqlite
+  name: SQLite
+  description: Query and inspect SQLite databases.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/sqlite
+  transport: stdio
+  auth: none
+  tags: [database, sqlite]
+  stacks: [rust-cli, react-node]
+  recommended: false
+  configSnippet: |
+    {
+      "sqlite": {
+        "command": "uvx",
+        "args": ["mcp-server-sqlite", "--db-path", "./app.db"]
+      }
+    }
+
+- id: puppeteer
+  name: Puppeteer Browser
+  description: Headless Chrome automation — navigate, click, screenshot, scrape.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer
+  transport: stdio
+  auth: none
+  tags: [browser, scraping, automation]
+  stacks: [react-node, nextjs-prisma]
+  recommended: true
+  configSnippet: |
+    {
+      "puppeteer": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+      }
+    }
+
+- id: playwright
+  name: Playwright Browser
+  description: Cross-browser automation via Microsoft Playwright.
+  sourceUrl: https://github.com/microsoft/playwright-mcp
+  transport: stdio
+  auth: none
+  tags: [browser, automation, testing]
+  stacks: [react-node, nextjs-prisma]
+  recommended: false
+  configSnippet: |
+    {
+      "playwright": {
+        "command": "npx",
+        "args": ["-y", "@playwright/mcp@latest"]
+      }
+    }
+
+- id: sentry
+  name: Sentry
+  description: Query Sentry errors, issues, and releases.
+  sourceUrl: https://github.com/getsentry/sentry-mcp
+  transport: stdio
+  auth: api-key
+  tags: [monitoring, errors]
+  stacks: [react-node, nextjs-prisma, fastapi-postgres, mobile-expo]
+  recommended: true
+  configSnippet: |
+    {
+      "sentry": {
+        "command": "npx",
+        "args": ["-y", "@sentry/mcp-server@latest"],
+        "env": { "SENTRY_AUTH_TOKEN": "$SENTRY_AUTH_TOKEN" }
+      }
+    }
+
+- id: vercel
+  name: Vercel
+  description: Deploy status, project config, and env var management.
+  sourceUrl: https://vercel.com/docs/mcp
+  transport: http
+  auth: oauth
+  tags: [deploy, hosting]
+  stacks: [nextjs-prisma]
+  recommended: true
+  configSnippet: |
+    {
+      "vercel": {
+        "type": "http",
+        "url": "https://mcp.vercel.com"
+      }
+    }
+
+- id: slack
+  name: Slack
+  description: Post messages, search channels, manage threads.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/slack
+  transport: stdio
+  auth: oauth
+  tags: [communication, slack]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "slack": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-slack"],
+        "env": { "SLACK_BOT_TOKEN": "$SLACK_BOT_TOKEN" }
+      }
+    }
+
+- id: linear
+  name: Linear
+  description: Read and manage Linear issues, projects, and cycles.
+  sourceUrl: https://linear.app/docs/mcp
+  transport: http
+  auth: oauth
+  tags: [issues, projects, linear]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "linear": {
+        "type": "http",
+        "url": "https://mcp.linear.app/sse"
+      }
+    }
+
+- id: notion
+  name: Notion
+  description: Read pages, databases, and create entries in Notion.
+  sourceUrl: https://github.com/makenotion/notion-mcp-server
+  transport: stdio
+  auth: oauth
+  tags: [docs, knowledge-base, notion]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "notion": {
+        "command": "npx",
+        "args": ["-y", "@notionhq/notion-mcp-server"]
+      }
+    }
+
+- id: atlassian
+  name: Jira + Confluence
+  description: Atlassian official MCP for Jira issues and Confluence pages.
+  sourceUrl: https://www.atlassian.com/blog/announcements/remote-mcp-server
+  transport: http
+  auth: oauth
+  tags: [issues, docs, atlassian]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "atlassian": {
+        "type": "http",
+        "url": "https://mcp.atlassian.com/v1/sse"
+      }
+    }
+
+- id: stripe
+  name: Stripe
+  description: Stripe Agent Toolkit MCP — payments, customers, subscriptions.
+  sourceUrl: https://docs.stripe.com/agents
+  transport: stdio
+  auth: api-key
+  tags: [payments, stripe]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "stripe": {
+        "command": "npx",
+        "args": ["-y", "@stripe/mcp", "--tools=all"],
+        "env": { "STRIPE_SECRET_KEY": "$STRIPE_SECRET_KEY" }
+      }
+    }
+
+- id: cloudflare
+  name: Cloudflare
+  description: Workers, KV, R2, D1, and DNS access via Cloudflare MCP.
+  sourceUrl: https://github.com/cloudflare/mcp-server-cloudflare
+  transport: http
+  auth: oauth
+  tags: [hosting, cdn, cloudflare]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "cloudflare": {
+        "type": "http",
+        "url": "https://observability.mcp.cloudflare.com/sse"
+      }
+    }
+
+- id: supabase
+  name: Supabase
+  description: Manage Supabase databases, auth, storage, and edge functions.
+  sourceUrl: https://github.com/supabase-community/supabase-mcp
+  transport: stdio
+  auth: api-key
+  tags: [backend, database, supabase]
+  stacks: [react-node, nextjs-prisma]
+  recommended: false
+  configSnippet: |
+    {
+      "supabase": {
+        "command": "npx",
+        "args": ["-y", "@supabase/mcp-server-supabase@latest"],
+        "env": { "SUPABASE_ACCESS_TOKEN": "$SUPABASE_ACCESS_TOKEN" }
+      }
+    }
+
+- id: aws
+  name: AWS
+  description: AWS API access — S3, Lambda, EC2, IAM, and more.
+  sourceUrl: https://github.com/awslabs/mcp
+  transport: stdio
+  auth: basic
+  tags: [cloud, aws]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "aws": {
+        "command": "uvx",
+        "args": ["awslabs.aws-mcp-server"]
+      }
+    }
+
+- id: gcp
+  name: Google Cloud
+  description: Google Cloud Platform API access via MCP.
+  sourceUrl: https://github.com/GoogleCloudPlatform/mcp-toolbox
+  transport: stdio
+  auth: oauth
+  tags: [cloud, gcp]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "gcp": {
+        "command": "uvx",
+        "args": ["mcp-toolbox-server"]
+      }
+    }
+
+- id: azure
+  name: Azure
+  description: Azure resource management via MCP.
+  sourceUrl: https://github.com/Azure/azure-mcp
+  transport: stdio
+  auth: oauth
+  tags: [cloud, azure]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "azure": {
+        "command": "npx",
+        "args": ["-y", "@azure/mcp@latest", "server", "start"]
+      }
+    }
+
+- id: brave-search
+  name: Brave Search
+  description: Web search via Brave Search API.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search
+  transport: stdio
+  auth: api-key
+  tags: [search, web]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "brave-search": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+        "env": { "BRAVE_API_KEY": "$BRAVE_API_KEY" }
+      }
+    }
+
+- id: fetch
+  name: Fetch
+  description: Fetch arbitrary URLs and convert HTML to Markdown for the LLM.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/fetch
+  transport: stdio
+  auth: none
+  tags: [web, fetch]
+  stacks: []
+  recommended: true
+  configSnippet: |
+    {
+      "fetch": {
+        "command": "uvx",
+        "args": ["mcp-server-fetch"]
+      }
+    }
+
+- id: memory
+  name: Memory (Knowledge Graph)
+  description: Persistent knowledge-graph memory across sessions.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/memory
+  transport: stdio
+  auth: none
+  tags: [memory, persistence]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "memory": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-memory"]
+      }
+    }
+
+- id: sequential-thinking
+  name: Sequential Thinking
+  description: Step-by-step reasoning helper that branches and revises thought chains.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking
+  transport: stdio
+  auth: none
+  tags: [reasoning, planning]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "sequential-thinking": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+      }
+    }
+
+- id: time
+  name: Time
+  description: Timezone conversion and current-time queries.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/time
+  transport: stdio
+  auth: none
+  tags: [utility, time]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "time": {
+        "command": "uvx",
+        "args": ["mcp-server-time"]
+      }
+    }
+
+- id: git
+  name: Git
+  description: Read git history, diffs, and branches via MCP.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/git
+  transport: stdio
+  auth: none
+  tags: [git, vcs]
+  stacks: []
+  recommended: true
+  configSnippet: |
+    {
+      "git": {
+        "command": "uvx",
+        "args": ["mcp-server-git", "--repository", "."]
+      }
+    }
+
+- id: docker
+  name: Docker
+  description: Manage Docker containers, images, and compose stacks.
+  sourceUrl: https://github.com/QuantGeekDev/docker-mcp
+  transport: stdio
+  auth: none
+  tags: [docker, devops]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "docker": {
+        "command": "uvx",
+        "args": ["docker-mcp"]
+      }
+    }
+
+- id: kubernetes
+  name: Kubernetes
+  description: Read pods, deployments, logs from a configured kube context.
+  sourceUrl: https://github.com/Flux159/mcp-server-kubernetes
+  transport: stdio
+  auth: basic
+  tags: [kubernetes, devops]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "kubernetes": {
+        "command": "npx",
+        "args": ["mcp-server-kubernetes"]
+      }
+    }
+
+- id: figma
+  name: Figma
+  description: Read Figma files, frames, and components.
+  sourceUrl: https://github.com/GLips/Figma-Context-MCP
+  transport: stdio
+  auth: api-key
+  tags: [design, figma]
+  stacks: [react-node, nextjs-prisma, mobile-expo]
+  recommended: false
+  configSnippet: |
+    {
+      "figma": {
+        "command": "npx",
+        "args": ["-y", "figma-developer-mcp", "--stdio"],
+        "env": { "FIGMA_API_KEY": "$FIGMA_API_KEY" }
+      }
+    }
+
+- id: pdf-reader
+  name: PDF Reader
+  description: Read and extract text and tables from PDFs.
+  sourceUrl: https://github.com/MeterLong/MCP-Doc
+  transport: stdio
+  auth: none
+  tags: [pdf, document]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "pdf-reader": {
+        "command": "uvx",
+        "args": ["mcp-doc"]
+      }
+    }
+
+- id: e2b
+  name: E2B Code Interpreter
+  description: Run untrusted code in an E2B cloud sandbox.
+  sourceUrl: https://github.com/e2b-dev/mcp-server
+  transport: stdio
+  auth: api-key
+  tags: [sandbox, code-execution]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "e2b": {
+        "command": "npx",
+        "args": ["-y", "@e2b/mcp-server"],
+        "env": { "E2B_API_KEY": "$E2B_API_KEY" }
+      }
+    }
+
+- id: redis
+  name: Redis
+  description: Read/write Redis keys, lists, and pubsub.
+  sourceUrl: https://github.com/redis/mcp-redis
+  transport: stdio
+  auth: basic
+  tags: [database, cache, redis]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "redis": {
+        "command": "uvx",
+        "args": ["mcp-server-redis", "redis://localhost:6379"]
+      }
+    }
+
+- id: mongodb
+  name: MongoDB
+  description: Query and inspect MongoDB collections.
+  sourceUrl: https://github.com/mongodb-js/mongodb-mcp-server
+  transport: stdio
+  auth: basic
+  tags: [database, mongodb]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "mongodb": {
+        "command": "npx",
+        "args": ["-y", "mongodb-mcp-server"]
+      }
+    }
+
+- id: elasticsearch
+  name: Elasticsearch
+  description: Search and query Elasticsearch indices.
+  sourceUrl: https://github.com/elastic/mcp-server-elasticsearch
+  transport: stdio
+  auth: api-key
+  tags: [search, elasticsearch]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "elasticsearch": {
+        "command": "npx",
+        "args": ["-y", "@elastic/mcp-server-elasticsearch"]
+      }
+    }
+
+- id: clickhouse
+  name: ClickHouse
+  description: Query ClickHouse analytical databases.
+  sourceUrl: https://github.com/ClickHouse/mcp-clickhouse
+  transport: stdio
+  auth: basic
+  tags: [database, analytics, clickhouse]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "clickhouse": {
+        "command": "uvx",
+        "args": ["mcp-clickhouse"]
+      }
+    }
+
+- id: bigquery
+  name: BigQuery
+  description: Query Google BigQuery datasets.
+  sourceUrl: https://github.com/LucasHild/mcp-server-bigquery
+  transport: stdio
+  auth: oauth
+  tags: [database, analytics, gcp]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "bigquery": {
+        "command": "uvx",
+        "args": ["mcp-server-bigquery"]
+      }
+    }
+
+- id: posthog
+  name: PostHog
+  description: Query PostHog analytics, feature flags, and session replays.
+  sourceUrl: https://github.com/posthog/posthog-mcp
+  transport: http
+  auth: api-key
+  tags: [analytics, product]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "posthog": {
+        "type": "http",
+        "url": "https://app.posthog.com/mcp"
+      }
+    }
+
+- id: prometheus
+  name: Prometheus
+  description: Query Prometheus metrics.
+  sourceUrl: https://github.com/pab1it0/prometheus-mcp-server
+  transport: stdio
+  auth: none
+  tags: [monitoring, metrics]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "prometheus": {
+        "command": "uvx",
+        "args": ["prometheus-mcp-server"]
+      }
+    }
+
+- id: grafana
+  name: Grafana
+  description: Read Grafana dashboards, alerts, and Loki/Tempo queries.
+  sourceUrl: https://github.com/grafana/mcp-grafana
+  transport: stdio
+  auth: api-key
+  tags: [monitoring, dashboards]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "grafana": {
+        "command": "uvx",
+        "args": ["mcp-grafana"]
+      }
+    }
+
+- id: datadog
+  name: Datadog
+  description: Query Datadog metrics, logs, and incidents.
+  sourceUrl: https://github.com/winor30/mcp-server-datadog
+  transport: stdio
+  auth: api-key
+  tags: [monitoring, datadog]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "datadog": {
+        "command": "npx",
+        "args": ["-y", "@winor30/mcp-server-datadog"]
+      }
+    }
+
+- id: pagerduty
+  name: PagerDuty
+  description: Query incidents, schedules, and on-call rotations.
+  sourceUrl: https://github.com/wpfleger96/pagerduty-mcp-server
+  transport: stdio
+  auth: api-key
+  tags: [oncall, incidents]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "pagerduty": {
+        "command": "uvx",
+        "args": ["pagerduty-mcp-server"]
+      }
+    }
+
+- id: gitlab
+  name: GitLab
+  description: Issues, MRs, and pipelines via the GitLab API.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/gitlab
+  transport: stdio
+  auth: api-key
+  tags: [git, vcs, gitlab]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "gitlab": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-gitlab"],
+        "env": { "GITLAB_PERSONAL_ACCESS_TOKEN": "$GITLAB_TOKEN" }
+      }
+    }
+
+- id: youtube
+  name: YouTube
+  description: Search YouTube and fetch transcripts.
+  sourceUrl: https://github.com/anaisbetts/mcp-youtube
+  transport: stdio
+  auth: api-key
+  tags: [video, search]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "youtube": {
+        "command": "npx",
+        "args": ["-y", "@anaisbetts/mcp-youtube"]
+      }
+    }
+
+- id: discord
+  name: Discord
+  description: Read channels and send messages via Discord bot.
+  sourceUrl: https://github.com/v-3/discordmcp
+  transport: stdio
+  auth: api-key
+  tags: [communication, discord]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "discord": {
+        "command": "npx",
+        "args": ["-y", "@v3/discord-mcp"],
+        "env": { "DISCORD_TOKEN": "$DISCORD_TOKEN" }
+      }
+    }
+
+- id: gmail
+  name: Gmail
+  description: Read, search, and send Gmail messages.
+  sourceUrl: https://github.com/GongRzhe/Gmail-MCP-Server
+  transport: stdio
+  auth: oauth
+  tags: [email, gmail, google]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "gmail": {
+        "command": "npx",
+        "args": ["-y", "@gongrzhe/server-gmail-autoauth-mcp"]
+      }
+    }
+
+- id: google-calendar
+  name: Google Calendar
+  description: Read and create events in Google Calendar.
+  sourceUrl: https://github.com/nspady/google-calendar-mcp
+  transport: stdio
+  auth: oauth
+  tags: [calendar, google]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "google-calendar": {
+        "command": "npx",
+        "args": ["-y", "google-calendar-mcp"]
+      }
+    }
+
+- id: google-drive
+  name: Google Drive
+  description: Read, search, and write files in Google Drive.
+  sourceUrl: https://github.com/modelcontextprotocol/servers/tree/main/src/gdrive
+  transport: stdio
+  auth: oauth
+  tags: [files, google, gdrive]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "gdrive": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-gdrive"]
+      }
+    }
+
+- id: airtable
+  name: Airtable
+  description: Read and write Airtable bases and records.
+  sourceUrl: https://github.com/domdomegg/airtable-mcp-server
+  transport: stdio
+  auth: api-key
+  tags: [database, no-code, airtable]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "airtable": {
+        "command": "npx",
+        "args": ["-y", "airtable-mcp-server"],
+        "env": { "AIRTABLE_API_KEY": "$AIRTABLE_API_KEY" }
+      }
+    }
+
+- id: obsidian
+  name: Obsidian
+  description: Read and write notes in an Obsidian vault.
+  sourceUrl: https://github.com/MarkusPfundstein/mcp-obsidian
+  transport: stdio
+  auth: api-key
+  tags: [notes, obsidian]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "obsidian": {
+        "command": "uvx",
+        "args": ["mcp-obsidian"]
+      }
+    }
+
+- id: applescript
+  name: AppleScript
+  description: Run AppleScript on macOS to control Notes, Mail, Calendar, etc.
+  sourceUrl: https://github.com/peakmojo/applescript-mcp
+  transport: stdio
+  auth: none
+  tags: [macos, automation]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "applescript": {
+        "command": "npx",
+        "args": ["-y", "@peakmojo/applescript-mcp"]
+      }
+    }
+
+- id: shell
+  name: Shell
+  description: Run shell commands in a configured working directory.
+  sourceUrl: https://github.com/tumf/mcp-shell-server
+  transport: stdio
+  auth: none
+  tags: [shell, bash, automation]
+  stacks: []
+  recommended: false
+  configSnippet: |
+    {
+      "shell": {
+        "command": "uvx",
+        "args": ["mcp-shell-server"]
+      }
+    }
+
+- id: openapi
+  name: OpenAPI
+  description: Auto-generate MCP tools from any OpenAPI 3.x spec.
+  sourceUrl: https://github.com/janwilmake/openapi-mcp-server
+  transport: stdio
+  auth: none
+  tags: [api, openapi, integration]
+  stacks: [fastapi-postgres]
+  recommended: false
+  configSnippet: |
+    {
+      "openapi": {
+        "command": "npx",
+        "args": ["-y", "openapi-mcp-server", "https://api.example.com/openapi.json"]
+      }
+    }

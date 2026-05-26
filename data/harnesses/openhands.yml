@@ -1,0 +1,32 @@
+id: openhands
+name: OpenHands
+vendor: All Hands AI
+homepage: https://github.com/All-Hands-AI/OpenHands
+docsUrl: https://docs.all-hands.dev
+configFiles:
+  - path: .openhands/microagents/repo.md
+    scope: project
+    format: markdown
+    required: true
+  - path: .openhands/microagents/keyword.md
+    scope: project
+    format: markdown
+    required: false
+supports:
+  skills: false
+  mcp: true
+  memory: false
+  customCommands: true
+  ignoreFile: false
+agentsMdCompatible: false
+exampleSnippet: |
+  ---
+  name: repo-conventions
+  agent: CodeActAgent
+  ---
+  This repo uses pnpm workspaces. Always run `pnpm install` from root.
+  Tests use Vitest. Lint with ESLint + Prettier.
+notes: |
+  OpenHands uses "microagents" — markdown files with YAML frontmatter. Repo-wide ones live
+  in .openhands/microagents/repo.md; keyword-triggered ones in keyword.md.
+  MCP support is current; was previously planned-only.

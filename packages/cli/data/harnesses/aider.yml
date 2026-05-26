@@ -1,0 +1,34 @@
+id: aider
+name: Aider
+vendor: Aider
+homepage: https://aider.chat
+docsUrl: https://aider.chat/docs/config.html
+configFiles:
+  - path: .aider.conf.yml
+    scope: project
+    format: yaml
+    required: true
+  - path: CONVENTIONS.md
+    scope: project
+    format: markdown
+    required: false
+  - path: .aiderignore
+    scope: project
+    format: plaintext
+    required: false
+supports:
+  skills: false
+  mcp: false
+  memory: false
+  customCommands: false
+  ignoreFile: true
+agentsMdCompatible: false
+exampleSnippet: |
+  read:
+    - CONVENTIONS.md
+  model: anthropic/claude-opus-4-20250514
+  auto-commits: false
+  test-cmd: pnpm test
+notes: |
+  Aider has no skill or MCP system. CONVENTIONS.md is read-only context, not a config target.
+  .aider.conf.yml is the actual config; we generate both.

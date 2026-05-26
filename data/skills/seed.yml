@@ -1,0 +1,273 @@
+# Seed skills. Each entry must match @appblueprints/core SkillEntry schema.
+# Tier: recommended=true for the curated "first picks". Others are part of the firehose.
+
+- id: testing-vitest
+  name: Vitest Test Runner
+  description: Helpers and patterns for writing fast Vitest tests in TypeScript projects.
+  sourceUrl: https://vitest.dev
+  author: Vitest core team
+  tags: [testing, javascript, typescript, vitest]
+  stacks: [react-node, nextjs-prisma, mobile-expo]
+  harnesses: [claude-code]
+  recommended: true
+
+- id: testing-pytest
+  name: Pytest Patterns
+  description: Pytest fixtures, parametrize, factory-boy patterns for Python services.
+  sourceUrl: https://docs.pytest.org
+  tags: [testing, python, pytest]
+  stacks: [fastapi-postgres]
+  harnesses: [claude-code]
+  recommended: true
+
+- id: testing-cargo
+  name: Cargo Test Patterns
+  description: Patterns for unit tests, integration tests, and doc tests in Rust.
+  sourceUrl: https://doc.rust-lang.org/book/ch11-00-testing.html
+  tags: [testing, rust]
+  stacks: [rust-cli]
+  harnesses: [claude-code]
+  recommended: true
+
+- id: lint-eslint-prettier
+  name: ESLint + Prettier Setup
+  description: Opinionated lint and format config for TypeScript projects.
+  sourceUrl: https://typescript-eslint.io
+  tags: [lint, javascript, typescript]
+  stacks: [react-node, nextjs-prisma, mobile-expo]
+  harnesses: [claude-code, cursor, cline]
+  recommended: true
+
+- id: lint-ruff
+  name: Ruff Lint + Format
+  description: Fast Python linter and formatter (replaces flake8 + black + isort).
+  sourceUrl: https://docs.astral.sh/ruff/
+  tags: [lint, python, ruff]
+  stacks: [fastapi-postgres]
+  harnesses: [claude-code]
+  recommended: true
+
+- id: lint-clippy
+  name: Clippy Lints
+  description: Idiomatic Rust enforcement via Clippy. Treats warnings as errors.
+  sourceUrl: https://github.com/rust-lang/rust-clippy
+  tags: [lint, rust]
+  stacks: [rust-cli]
+  harnesses: [claude-code]
+  recommended: true
+
+- id: docs-tsdoc
+  name: TSDoc Comments
+  description: TSDoc conventions for type-aware JSDoc-like comments.
+  sourceUrl: https://tsdoc.org
+  tags: [docs, typescript]
+  stacks: [react-node, nextjs-prisma]
+  harnesses: [claude-code]
+  recommended: false
+
+- id: docs-mkdocs
+  name: MkDocs Material
+  description: Documentation site generator for Python projects.
+  sourceUrl: https://squidfunk.github.io/mkdocs-material/
+  tags: [docs, python]
+  stacks: [fastapi-postgres]
+  harnesses: [claude-code]
+  recommended: false
+
+- id: docs-rustdoc
+  name: Rustdoc Conventions
+  description: Patterns for writing comprehensive rustdoc comments and examples.
+  sourceUrl: https://doc.rust-lang.org/rustdoc/
+  tags: [docs, rust]
+  stacks: [rust-cli]
+  harnesses: [claude-code]
+  recommended: false
+
+- id: git-conventional-commits
+  name: Conventional Commits
+  description: Commit message format (feat:, fix:, chore:, …) for automated changelogs.
+  sourceUrl: https://www.conventionalcommits.org
+  tags: [git, conventions]
+  stacks: [react-node, nextjs-prisma, fastapi-postgres, rust-cli, mobile-expo]
+  harnesses: []
+  recommended: true
+
+- id: frontend-tailwind
+  name: Tailwind CSS Patterns
+  description: Utility-first CSS conventions and component composition with Tailwind.
+  sourceUrl: https://tailwindcss.com
+  tags: [frontend, css, tailwind]
+  stacks: [react-node, nextjs-prisma, mobile-expo]
+  harnesses: [claude-code, cursor]
+  recommended: true
+
+- id: auth-nextauth
+  name: NextAuth.js (Auth.js)
+  description: Authentication patterns with Auth.js v5 in Next.js App Router.
+  sourceUrl: https://authjs.dev
+  tags: [auth, nextjs]
+  stacks: [nextjs-prisma]
+  harnesses: [claude-code]
+  recommended: true
+
+- id: db-prisma
+  name: Prisma ORM
+  description: Schema design, migrations, and query patterns with Prisma.
+  sourceUrl: https://www.prisma.io/docs
+  tags: [database, orm, prisma]
+  stacks: [nextjs-prisma, react-node]
+  harnesses: [claude-code]
+  recommended: true
+
+- id: db-alembic
+  name: Alembic Migrations
+  description: SQLAlchemy migration patterns via Alembic.
+  sourceUrl: https://alembic.sqlalchemy.org
+  tags: [database, python, alembic]
+  stacks: [fastapi-postgres]
+  harnesses: [claude-code]
+  recommended: true
+
+- id: api-openapi
+  name: OpenAPI Schema Discipline
+  description: Patterns for keeping OpenAPI spec aligned with FastAPI/Pydantic models.
+  sourceUrl: https://swagger.io/specification/
+  tags: [api, openapi, fastapi]
+  stacks: [fastapi-postgres]
+  harnesses: [claude-code]
+  recommended: false
+
+- id: release-cargo-dist
+  name: cargo-dist Releases
+  description: Multi-platform binary releases for Rust CLIs.
+  sourceUrl: https://github.com/axodotdev/cargo-dist
+  tags: [release, rust]
+  stacks: [rust-cli]
+  harnesses: [claude-code]
+  recommended: false
+
+- id: mobile-expo-router
+  name: Expo Router Patterns
+  description: File-based routing patterns for Expo Router v3+.
+  sourceUrl: https://docs.expo.dev/router/introduction/
+  tags: [mobile, expo, react-native]
+  stacks: [mobile-expo]
+  harnesses: [claude-code]
+  recommended: true
+
+- id: review-pr-checklist
+  name: PR Review Checklist
+  description: Universal pre-merge checklist — types, tests, error paths, secrets.
+  sourceUrl: https://github.com/anthropics/skills
+  tags: [review, quality]
+  stacks: []
+  harnesses: [claude-code]
+  recommended: true
+
+- id: security-secret-scan
+  name: Secret Scanning Pre-commit
+  description: Scan staged changes for API keys, tokens, .env leaks before commit.
+  sourceUrl: https://github.com/Yelp/detect-secrets
+  tags: [security]
+  stacks: []
+  harnesses: [claude-code, cursor]
+  recommended: true
+
+- id: refactor-find-dead-code
+  name: Dead Code Finder
+  description: Locate unreferenced exports, files, and dependencies.
+  sourceUrl: https://github.com/webpro-nl/knip
+  tags: [refactor, cleanup]
+  stacks: [react-node, nextjs-prisma]
+  harnesses: [claude-code]
+  recommended: false
+
+- id: spec-driven-dev
+  name: Spec-Driven Development
+  description: Patterns from github/spec-kit — spec → plan → tasks → code.
+  sourceUrl: https://github.com/github/spec-kit
+  tags: [methodology, spec]
+  stacks: []
+  harnesses: []
+  recommended: false
+
+- id: debug-systematic
+  name: Systematic Debugging
+  description: Reproduce → isolate → diagnose → fix workflow.
+  sourceUrl: https://github.com/anthropics/skills
+  tags: [debug]
+  stacks: []
+  harnesses: [claude-code]
+  recommended: false
+
+- id: docs-onboarding
+  name: Onboarding Doc Generator
+  description: Produce a teammate-readable ONBOARDING.md from repo scan.
+  sourceUrl: https://github.com/anthropics/skills
+  tags: [docs, onboarding]
+  stacks: []
+  harnesses: [claude-code]
+  recommended: false
+
+- id: arch-adr
+  name: ADR (Architecture Decision Record)
+  description: Generate ADRs for design decisions (Kafka vs SQS, REST vs GraphQL, …).
+  sourceUrl: https://adr.github.io
+  tags: [architecture, docs]
+  stacks: []
+  harnesses: [claude-code]
+  recommended: false
+
+- id: deploy-checklist
+  name: Pre-Deploy Checklist
+  description: CI green, migrations safe, feature flags ready, rollback plan documented.
+  sourceUrl: https://github.com/anthropics/skills
+  tags: [deploy, release]
+  stacks: []
+  harnesses: [claude-code]
+  recommended: false
+
+- id: incident-response
+  name: Incident Response Playbook
+  description: Triage → comms → mitigation → postmortem flow.
+  sourceUrl: https://github.com/anthropics/skills
+  tags: [incident, oncall]
+  stacks: []
+  harnesses: [claude-code]
+  recommended: false
+
+- id: testing-playwright
+  name: Playwright End-to-End
+  description: Browser end-to-end tests with Playwright. Trace viewer + parallel runs.
+  sourceUrl: https://playwright.dev
+  tags: [testing, e2e]
+  stacks: [react-node, nextjs-prisma]
+  harnesses: [claude-code]
+  recommended: false
+
+- id: perf-lighthouse
+  name: Lighthouse Performance Budgets
+  description: Set and enforce Core Web Vitals budgets in CI.
+  sourceUrl: https://github.com/GoogleChrome/lighthouse-ci
+  tags: [performance, web]
+  stacks: [nextjs-prisma, react-node]
+  harnesses: [claude-code]
+  recommended: false
+
+- id: a11y-axe
+  name: Accessibility (axe)
+  description: Automated a11y checks with axe-core in tests and CI.
+  sourceUrl: https://github.com/dequelabs/axe-core
+  tags: [accessibility, a11y]
+  stacks: [nextjs-prisma, react-node, mobile-expo]
+  harnesses: [claude-code]
+  recommended: false
+
+- id: i18n-icu
+  name: i18n with ICU MessageFormat
+  description: Internationalization patterns with ICU message format and react-intl.
+  sourceUrl: https://formatjs.io
+  tags: [i18n, localization]
+  stacks: [nextjs-prisma, react-node, mobile-expo]
+  harnesses: [claude-code]
+  recommended: false
