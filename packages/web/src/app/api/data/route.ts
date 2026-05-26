@@ -16,6 +16,7 @@ export async function GET() {
       docsUrl: h.docsUrl,
       supports: h.supports,
       agentsMdCompatible: h.agentsMdCompatible,
+      configFiles: h.configFiles.map((c) => c.path),
     })),
     stacks: stacks.map((s) => ({
       id: s.id,
