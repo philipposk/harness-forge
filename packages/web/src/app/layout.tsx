@@ -14,7 +14,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "AppBlueprints — multi-harness AI coding config generator",
+  title: "Harness Forge — multi-harness AI coding config generator",
   description:
     "Generate AGENTS.md, CLAUDE.md, .cursor/rules, skills and MCP bundles for whichever AI coding tool you use.",
 };

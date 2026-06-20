@@ -5,13 +5,13 @@ import { runWizard } from "./wizard.js";
 import { resolveDataDir } from "./data-dir.js";
 import type { HarnessId } from "@appblueprints/core";
 
-const HELP = `${kleur.bold("appblueprints")} — multi-harness AI coding config generator
+const HELP = `${kleur.bold("harness-forge")} — multi-harness AI coding config generator
 
 Usage:
-  appblueprints init [options]
-  appblueprints list-harnesses
-  appblueprints list-stacks
-  appblueprints --help
+  harness-forge init [options]
+  harness-forge list-harnesses
+  harness-forge list-stacks
+  harness-forge --help
 
 Options:
   --dry-run                 Show files that would be written but write nothing

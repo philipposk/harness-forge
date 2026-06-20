@@ -1,19 +1,19 @@
-# appblueprints (Python)
+# harness-forge (Python)
 
-Multi-harness AI coding config generator. Python wrapper around the official [`appblueprints` npm CLI](https://www.npmjs.com/package/appblueprints).
+Multi-harness AI coding config generator. Python wrapper around the official [`harness-forge` npm CLI](https://www.npmjs.com/package/harness-forge).
 
 ## Install
 
 ```bash
-pip install appblueprints
+pip install harness-forge
 ```
 
 ## Use
 
 ```bash
-appblueprints init
-appblueprints init --yes --stack fastapi-postgres --harness claude-code
-appblueprints list-harnesses
+harness-forge init
+harness-forge init --yes --stack fastapi-postgres --harness claude-code
+harness-forge list-harnesses
 ```
 
 ## Requirements

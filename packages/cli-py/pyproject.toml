@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "appblueprints"
+name = "harness-forge"
 version = "0.0.1"
-description = "Multi-harness AI coding config generator. Python wrapper around the AppBlueprints npm CLI."
+description = "Multi-harness AI coding config generator. Python wrapper around the Harness Forge npm CLI."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "Philippos Ktistakis" }]
@@ -30,11 +30,11 @@ classifiers = [
 dependencies = []
 
 [project.scripts]
-appblueprints = "appblueprints.cli:main"
+harness-forge = "appblueprints.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/philipposk/AppBlueprints"
-Repository = "https://github.com/philipposk/AppBlueprints"
+Homepage = "https://github.com/philipposk/harness-forge"
+Repository = "https://github.com/philipposk/harness-forge"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/appblueprints"]

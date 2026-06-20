@@ -1,10 +1,10 @@
 {
-  "name": "appblueprints",
+  "name": "harness-forge",
   "version": "0.0.1",
   "description": "Multi-harness AI coding config generator. Generate AGENTS.md, CLAUDE.md, .cursor/rules, skills and MCP bundles for whichever AI coding tool you use.",
   "type": "module",
   "bin": {
-    "appblueprints": "./dist/bin.js"
+    "harness-forge": "./dist/bin.js"
   },
   "files": [
     "dist",

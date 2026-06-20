@@ -1,11 +1,11 @@
-# appblueprints
+# harness-forge
 
 Multi-harness AI coding config generator. Drops the right configs, skills, and MCP servers into your repo for whichever AI coding tool you use — Claude Code, Cursor, Codex, Cline, Windsurf, Aider, Continue, Gemini CLI, Zed, OpenHands.
 
 ## Install + run (no install needed)
 
 ```bash
-npx appblueprints init
+npx harness-forge init
 ```
 
 The wizard asks:
@@ -21,18 +21,18 @@ It writes AGENTS.md (universal), tool-specific overrides for whichever you picke
 ## Other commands
 
 ```bash
-appblueprints init --dry-run         # See what would be written, don't touch files
-appblueprints init --yes             # Non-interactive (uses defaults)
-appblueprints init --stack nextjs-prisma --harness claude-code --harness cursor
-appblueprints list-harnesses         # Show all supported tools
-appblueprints list-stacks            # Show all stack profiles
+harness-forge init --dry-run         # See what would be written, don't touch files
+harness-forge init --yes             # Non-interactive (uses defaults)
+harness-forge init --stack nextjs-prisma --harness claude-code --harness cursor
+harness-forge list-harnesses         # Show all supported tools
+harness-forge list-stacks            # Show all stack profiles
 ```
 
 ## Develop
 
 ```bash
 pnpm install
-pnpm --filter appblueprints build
+pnpm --filter harness-forge build
 node packages/cli/dist/bin.js init --dry-run --yes
 ```
 

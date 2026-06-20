@@ -40,7 +40,7 @@ function cancelGuard<T>(value: T | symbol): asserts value is T {
 }
 
 export async function runWizard(opts: WizardOptions): Promise<void> {
-  intro(kleur.cyan("AppBlueprints — multi-harness AI coding config generator"));
+  intro(kleur.cyan("Harness Forge — multi-harness AI coding config generator"));
 
   const { harnesses, skills, mcps, stacks } = await loadAll({
     dataDir: opts.dataDir,
@@ -69,7 +69,7 @@ export async function runWizard(opts: WizardOptions): Promise<void> {
 
   if (opts.yes) {
     projectName = "My App";
-    projectDescription = "A new app scaffolded by AppBlueprints.";
+    projectDescription = "A new app scaffolded by Harness Forge.";
     stack = stacks.find((s) => s.id === fallbackStackId)!;
     selectedHarnesses =
       opts.defaultHarnesses && opts.defaultHarnesses.length > 0
@@ -88,7 +88,7 @@ export async function runWizard(opts: WizardOptions): Promise<void> {
     const descAns = await text({
       message: "One-sentence description?",
       placeholder: "A new app that ...",
-      defaultValue: "A new app scaffolded by AppBlueprints.",
+      defaultValue: "A new app scaffolded by Harness Forge.",
     });
     cancelGuard(descAns);
     projectDescription = descAns as string;

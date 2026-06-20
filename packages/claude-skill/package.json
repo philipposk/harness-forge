@@ -2,7 +2,7 @@
   "name": "@appblueprints/claude-skill",
   "version": "0.0.1",
   "private": true,
-  "description": "Claude Code skill packaging for AppBlueprints. Drop into ~/.claude/skills/appblueprints/.",
+  "description": "Claude Code skill packaging for Harness Forge. Drop into ~/.claude/skills/harness-forge/.",
   "scripts": {
     "install-local": "node scripts/install.mjs"
   }

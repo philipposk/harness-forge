@@ -77,16 +77,26 @@ export async function detectStack(cwd: string): Promise<DetectResult | null> {
     return { stackId: "nextjs-prisma", confidence: "high", evidence };
   }
   if (hasDep(pkg, "next")) {
-    evidence.push("next in package.json");
-    return { stackId: "nextjs-prisma", confidence: "medium", evidence };
+    // Next.js without a detected ORM. nextjs-prisma is the closest profile,
+    // but we drop to low confidence so the user knows to confirm the ORM.
+    evidence.push("next in package.json (no prisma detected — verify ORM)");
+    return { stackId: "nextjs-prisma", confidence: "low", evidence };
   }
 
-  // React + Node — react in package.json without next.
-  if (hasDep(pkg, "react") || hasDep(pkg, "express") || hasDep(pkg, "fastify")) {
-    if (hasDep(pkg, "react")) evidence.push("react in package.json");
+  // React frontend (with or without a Node backend lib) — medium confidence.
+  if (hasDep(pkg, "react")) {
+    evidence.push("react in package.json");
     if (hasDep(pkg, "express")) evidence.push("express in package.json");
     if (hasDep(pkg, "fastify")) evidence.push("fastify in package.json");
     return { stackId: "react-node", confidence: "medium", evidence };
+  }
+
+  // Backend-only Node (Express/Fastify, no React). No dedicated backend-only
+  // profile yet, so react-node is the nearest fit but only at low confidence.
+  if (hasDep(pkg, "express") || hasDep(pkg, "fastify")) {
+    if (hasDep(pkg, "express")) evidence.push("express in package.json (no react)");
+    if (hasDep(pkg, "fastify")) evidence.push("fastify in package.json (no react)");
+    return { stackId: "react-node", confidence: "low", evidence };
   }
 
   // FastAPI: pyproject.toml or requirements.txt mentions fastapi.

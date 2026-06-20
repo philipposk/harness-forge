@@ -1,5 +1,5 @@
 {
-  "name": "appblueprints-monorepo",
+  "name": "harness-forge-monorepo",
   "private": true,
   "version": "0.0.0",
   "description": "Multi-harness AI coding config generator: AGENTS.md, CLAUDE.md, .cursor/rules, skills, MCP bundles.",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/philipposk/AppBlueprints"
+    "url": "https://github.com/philipposk/harness-forge"
   },
   "license": "MIT"
 }

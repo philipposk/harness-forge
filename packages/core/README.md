@@ -1,6 +1,6 @@
 # @appblueprints/core
 
-Core schemas, loaders, and recommender for AppBlueprints. Pure functions, no I/O outside loaders.
+Core schemas, loaders, and recommender for Harness Forge. Pure functions, no I/O outside loaders.
 
 ## What it does
 

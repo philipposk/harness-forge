@@ -1,4 +1,4 @@
-# AppBlueprints — Setup Files for AI Coding Assistants
+# Harness Forge — Setup Files for AI Coding Assistants
 
 A tool that sets up the right "instruction files" for whichever AI coding assistant you use. You answer a few simple questions — what you're building and which AI tool you work with — and it drops the matching setup files into your project so your AI assistant instantly understands your project, your habits, and what extra abilities it should have. It works across many popular AI coding tools, not just one.
 
@@ -18,12 +18,12 @@ A pnpm monorepo. The generator writes a universal `AGENTS.md` base plus harness-
 
 Packages:
 - `@appblueprints/core` — TS lib: schemas, loaders, recommender, generator, discovery
-- `appblueprints` (npm CLI) — `npx appblueprints init` wizard
-- `@appblueprints/web` — Next.js wizard for appblueprints.6x7.gr
+- `harness-forge` (npm CLI) — `npx harness-forge init` wizard
+- `@appblueprints/web` — Next.js wizard for harness-forge.6x7.gr
 - `@appblueprints/crawler` — nightly upstream awesome-list crawler
 - `@appblueprints/claude-skill` — Claude Code skill wrapping the CLI
-- `appblueprints` (PyPI) — Python shim around the npm CLI
-- `appblueprints-vscode` — VS Code / Cursor extension
+- `harness-forge` (PyPI) — Python shim around the npm CLI
+- `harness-forge-vscode` — VS Code / Cursor extension
 
 Run locally:
 

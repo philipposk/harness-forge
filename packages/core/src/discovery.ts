@@ -20,9 +20,22 @@ export interface LiveTopUpOptions {
 }
 
 const DEFAULT_TTL_MS = 60 * 60 * 1000;
+const REQUEST_TIMEOUT_MS = 8000;
+const MAX_CACHE_ENTRIES = 200;
 
 const SKILL_TOPICS = ["claude-skill", "anthropic-skill", "claude-code-skill"];
 const MCP_TOPICS = ["mcp-server", "model-context-protocol", "mcp"];
+
+// Combine the caller's abort signal (if any) with a per-request timeout so a
+// hung GitHub request can never stall the wizard indefinitely.
+function withTimeout(signal: AbortSignal | undefined): AbortSignal {
+  const timeout = AbortSignal.timeout(REQUEST_TIMEOUT_MS);
+  if (!signal) return timeout;
+  if (typeof AbortSignal.any === "function") {
+    return AbortSignal.any([signal, timeout]);
+  }
+  return signal;
+}
 
 interface GitHubSearchResponse {
   items?: Array<{
@@ -55,8 +68,20 @@ async function searchGitHub(
   };
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
-  const res = await fetch(url, { headers, signal });
+  const res = await fetch(url, { headers, signal: withTimeout(signal) });
   if (!res.ok) {
+    // Surface rate-limit details so the caller can decide to back off. GitHub
+    // returns 403/429 with a Retry-After (seconds) or x-ratelimit-reset (epoch).
+    if (res.status === 429 || res.status === 403) {
+      const retryAfter = res.headers.get("retry-after");
+      const reset = res.headers.get("x-ratelimit-reset");
+      const hint = retryAfter
+        ? `retry after ${retryAfter}s`
+        : reset
+          ? `resets at ${new Date(Number(reset) * 1000).toISOString()}`
+          : "rate limited";
+      throw new Error(`GitHub search rate limited (${res.status}): ${hint}`);
+    }
     throw new Error(`GitHub search failed: ${res.status} ${res.statusText}`);
   }
   return (await res.json()) as GitHubSearchResponse;
@@ -94,8 +119,11 @@ export async function liveTopUp(
   const topics = [...SKILL_TOPICS, ...MCP_TOPICS];
   const results: DiscoveryEntry[] = [];
 
-  for (const topic of topics) {
-    try {
+  // Fetch all topics concurrently. Each is best-effort: a failed/rate-limited
+  // topic is skipped without aborting the others, so the wizard still works
+  // (and runs ~6x faster than the previous sequential loop).
+  const settled = await Promise.allSettled(
+    topics.map(async (topic) => {
       const data = await searchGitHub(
         topic,
         recentDays,
@@ -105,12 +133,11 @@ export async function liveTopUp(
       const kind: DiscoveryEntry["kind"] = SKILL_TOPICS.includes(topic)
         ? "skill"
         : "mcp";
-      for (const item of data.items ?? []) {
-        results.push(toEntry(item, kind));
-      }
-    } catch {
-      // Swallow — discovery is best-effort. Wizard still works offline.
-    }
+      return (data.items ?? []).map((item) => toEntry(item, kind));
+    })
+  );
+  for (const outcome of settled) {
+    if (outcome.status === "fulfilled") results.push(...outcome.value);
   }
 
   const seen = new Set<string>();
@@ -122,6 +149,16 @@ export async function liveTopUp(
   }
 
   if (cache) {
+    // Drop expired entries, then evict oldest if still over the cap, so a
+    // long-running server can't grow the cache without bound.
+    for (const [key, entry] of cache) {
+      if (entry.expiresAt <= now) cache.delete(key);
+    }
+    while (cache.size >= MAX_CACHE_ENTRIES) {
+      const oldest = cache.keys().next().value;
+      if (oldest === undefined) break;
+      cache.delete(oldest);
+    }
     cache.set(cacheKey, {
       value: deduped,
       expiresAt: now + DEFAULT_TTL_MS,

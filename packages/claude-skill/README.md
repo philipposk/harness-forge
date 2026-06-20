@@ -1,19 +1,19 @@
 # @appblueprints/claude-skill
 
-Claude Code skill packaging for AppBlueprints. The skill teaches Claude Code when and how to invoke the `appblueprints` CLI.
+Claude Code skill packaging for Harness Forge. The skill teaches Claude Code when and how to invoke the `harness-forge` CLI.
 
 ## Install
 
 ```bash
 node packages/claude-skill/scripts/install.mjs
-# Drops SKILL.md into ~/.claude/skills/appblueprints/
+# Drops SKILL.md into ~/.claude/skills/harness-forge/
 ```
 
 Then open Claude Code in any project and ask:
 
 > "set up this repo for Claude Code and Cursor"
 
-Claude will detect the AppBlueprints skill and run `npx appblueprints init` for you.
+Claude will detect the Harness Forge skill and run `npx harness-forge init` for you.
 
 ## How it works
 

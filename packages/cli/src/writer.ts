@@ -1,5 +1,5 @@
 import { mkdir, writeFile, access } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, resolve, relative, isAbsolute } from "node:path";
 import type { GeneratedFile } from "@appblueprints/core";
 
 export interface WriteFilesOptions {
@@ -29,8 +29,15 @@ export async function writeFiles(
   const written: string[] = [];
   let skipped = 0;
 
+  const root = resolve(opts.cwd);
   for (const file of opts.files) {
-    const abs = resolve(opts.cwd, file.path);
+    const abs = resolve(root, file.path);
+    // Defense in depth: never write outside the target directory, even if a
+    // generated file.path were ever to contain "../" or an absolute path.
+    const rel = relative(root, abs);
+    if (rel === "" || rel.startsWith("..") || isAbsolute(rel)) {
+      throw new Error(`Refusing to write outside target dir: ${file.path}`);
+    }
     if (!opts.overwrite && (await exists(abs))) {
       skipped += 1;
       continue;

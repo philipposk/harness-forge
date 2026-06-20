@@ -86,13 +86,13 @@ export async function POST(req: NextRequest) {
       .toLowerCase()
       .replace(/[^a-z0-9-]+/g, "-")
       .replace(/^-+|-+$/g, "")
-      .slice(0, 40) || "appblueprints";
+      .slice(0, 40) || "harness-forge";
     const blob = new Blob([buf], { type: "application/zip" });
     return new NextResponse(blob, {
       status: 200,
       headers: {
         "Content-Type": "application/zip",
-        "Content-Disposition": `attachment; filename="${slug}-appblueprints.zip"`,
+        "Content-Disposition": `attachment; filename="${slug}-harness-forge.zip"`,
         "Cache-Control": "no-store",
       },
     });

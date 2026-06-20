@@ -1,4 +1,4 @@
-"""Console entrypoint. Forwards args to `npx -y appblueprints@latest`."""
+"""Console entrypoint. Forwards args to `npx -y harness-forge@latest`."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import subprocess
 import sys
 from typing import List, Sequence
 
-NPX_PACKAGE = os.environ.get("APPBLUEPRINTS_NPX_PACKAGE", "appblueprints@latest")
+NPX_PACKAGE = os.environ.get("HARNESS_FORGE_NPX_PACKAGE", "harness-forge@latest")
 
 
 def _resolve_npx() -> str:
@@ -19,7 +19,7 @@ def _resolve_npx() -> str:
             return path
     print(
         "Error: `npx` not found. Install Node.js (>=20) from https://nodejs.org "
-        "or via your package manager. The Python `appblueprints` package is a "
+        "or via your package manager. The Python `harness-forge` package is a "
         "thin shim around the official npm CLI.",
         file=sys.stderr,
     )

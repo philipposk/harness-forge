@@ -1,8 +1,8 @@
 # @appblueprints/web
 
-Next.js wizard for AppBlueprints. Same `@appblueprints/core` generator as the CLI, browser UI.
+Next.js wizard for Harness Forge. Same `@appblueprints/core` generator as the CLI, browser UI.
 
-Deploys to `appblueprints.6x7.gr` (or `6x7.gr/AppBlueprints` via `APPBLUEPRINTS_BASE_PATH`).
+Deploys to `harness-forge.6x7.gr` (or `6x7.gr/Harness Forge` via `APPBLUEPRINTS_BASE_PATH`).
 
 ## Develop
 

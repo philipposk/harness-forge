@@ -94,10 +94,15 @@ export default function Page() {
   const [harnessIds, setHarnessIds] = useState<string[]>(DEFAULT_HARNESSES);
   const [tier, setTier] = useState<"recommended" | "all">("recommended");
   const [preview, setPreview] = useState<GenerateResponse | null>(null);
+  const [loading, setLoading] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<"idle" | "ok" | "err">("idle");
+  const [selectedPath, setSelectedPath] = useState<string | null>(null);
+  const [fileCopied, setFileCopied] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
+  const reqIdRef = useRef(0);
 
   // Load harness + stack catalog
   useEffect(() => {
@@ -112,11 +117,19 @@ export default function Page() {
       setPreview(null);
       return;
     }
+    // Cancel any in-flight request and tag this one, so a slow earlier response
+    // can never overwrite the state from a newer one (out-of-order race).
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    const reqId = ++reqIdRef.current;
+    setLoading(true);
     setError(null);
     try {
       const res = await fetch("./api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify({
           projectName: projectName || "My App",
           projectDescription: projectDescription || "A new app.",
@@ -131,9 +144,14 @@ export default function Page() {
         throw new Error(body.error ?? `${res.status} ${res.statusText}`);
       }
       const json = (await res.json()) as GenerateResponse;
-      setPreview(json);
+      if (reqId === reqIdRef.current) setPreview(json);
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      if (err instanceof DOMException && err.name === "AbortError") return;
+      if (reqId === reqIdRef.current) {
+        setError(err instanceof Error ? err.message : String(err));
+      }
+    } finally {
+      if (reqId === reqIdRef.current) setLoading(false);
     }
   }, [projectName, projectDescription, stackId, harnessIds, tier]);
 
@@ -151,6 +169,33 @@ export default function Page() {
     setHarnessIds((curr) =>
       curr.includes(id) ? curr.filter((x) => x !== id) : [...curr, id]
     );
+  }
+
+  // File currently open in the content viewer (looked up from the live preview).
+  const selectedFile = useMemo(
+    () => preview?.files.find((f) => f.path === selectedPath) ?? null,
+    [preview, selectedPath]
+  );
+
+  // Close the viewer on Escape.
+  useEffect(() => {
+    if (!selectedPath) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedPath(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selectedPath]);
+
+  async function copySelectedFile() {
+    if (!selectedFile) return;
+    try {
+      await navigator.clipboard.writeText(selectedFile.content);
+      setFileCopied(true);
+      setTimeout(() => setFileCopied(false), 1400);
+    } catch {
+      /* clipboard blocked — no-op */
+    }
   }
 
   async function handleDownload() {
@@ -177,9 +222,12 @@ export default function Page() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${slugify(projectName)}-appblueprints.zip`;
+      a.download = `${slugify(projectName)}-harness-forge.zip`;
+      document.body.appendChild(a);
       a.click();
-      URL.revokeObjectURL(url);
+      a.remove();
+      // Defer revoke a tick so the browser has started the download first.
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -191,17 +239,17 @@ export default function Page() {
     const harnessFlags = harnessIds.length
       ? harnessIds.map((h) => `--harness ${h}`).join(" ")
       : `--harness claude-code`;
-    return `npx appblueprints init --stack ${stackId} ${harnessFlags}`;
+    return `npx harness-forge init --stack ${stackId} ${harnessFlags}`;
   }, [stackId, harnessIds]);
 
   async function copyCmd() {
     try {
       await navigator.clipboard.writeText(cliCommand);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
+      setCopied("ok");
     } catch {
-      /* clipboard blocked */
+      setCopied("err");
     }
+    setTimeout(() => setCopied("idle"), 1400);
   }
 
   const stacks = data?.stacks ?? [];
@@ -213,7 +261,7 @@ export default function Page() {
     if (!preview) return [] as Array<{ section?: string; path?: string; label?: string }>;
     const out: Array<{ section?: string; path?: string; label?: string }> = [];
     const universalPaths = ["AGENTS.md"];
-    const scaffoldPaths = ["TODO.md", "SPEC.md", "README.appblueprints.md"];
+    const scaffoldPaths = ["TODO.md", "SPEC.md", "README.harness-forge.md"];
     const universal = preview.files.filter((f) => universalPaths.includes(f.path));
     const mcp = preview.files.filter((f) => f.path === ".mcp.json");
     const scaffold = preview.files.filter((f) => scaffoldPaths.includes(f.path));
@@ -255,14 +303,24 @@ export default function Page() {
       <div className={styles.topbar}>
         <div className={styles.topbarInner}>
           <div className={styles.brand}>
-            <span className={styles.brandMark}>A</span>
-            <span className={styles.brandName}>AppBlueprints</span>
+            <span className={styles.brandMark}>H</span>
+            <span className={styles.brandName}>Harness Forge</span>
             <span className={styles.brandVersion}>v0.1.0</span>
           </div>
           <nav className={styles.nav}>
-            <a href="https://github.com/philipposk/AppBlueprints#readme">Docs</a>
+            <a
+              href="https://github.com/philipposk/harness-forge#readme"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Docs
+            </a>
             <a href="#harnesses">Harnesses</a>
-            <a href="https://github.com/philipposk/AppBlueprints/blob/main/AWESOME.md">
+            <a
+              href="https://github.com/philipposk/harness-forge/blob/main/AWESOME.md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Awesome list
             </a>
             {data && (
@@ -296,7 +354,7 @@ export default function Page() {
           <br />
           Run it from your terminal in any repo:
           <div style={{ marginTop: 10 }}>
-            <code>npx appblueprints init</code>
+            <code>npx harness-forge init</code>
           </div>
           <div style={{ marginTop: 6, fontSize: 12 }}>
             Supports 10 harnesses · emits a universal <code>AGENTS.md</code> fallback for the
@@ -349,6 +407,7 @@ export default function Page() {
                   onChange={(e) => setProjectName(e.target.value)}
                   placeholder="My App"
                   autoComplete="off"
+                  maxLength={200}
                 />
               </div>
               <div className={styles.field}>
@@ -358,7 +417,8 @@ export default function Page() {
                   className={styles.textarea}
                   value={projectDescription}
                   onChange={(e) => setProjectDescription(e.target.value)}
-                  placeholder="A new app scaffolded by AppBlueprints."
+                  placeholder="A new app scaffolded by Harness Forge."
+                  maxLength={2000}
                 />
               </div>
             </div>
@@ -520,10 +580,20 @@ export default function Page() {
                 <span />
               </div>
             </div>
-            <div className={styles.tree}>
+            <div className={styles.tree} aria-busy={loading}>
               {harnessIds.length === 0 && (
                 <div className={`${styles.treeLine} ${styles.empty}`}>
                   Pick at least one harness to see generated files.
+                </div>
+              )}
+              {harnessIds.length > 0 && !preview && loading && (
+                <div className={`${styles.treeLine} ${styles.empty}`}>
+                  Generating preview…
+                </div>
+              )}
+              {harnessIds.length > 0 && !preview && !loading && error && (
+                <div className={`${styles.treeLine} ${styles.empty}`}>
+                  Couldn’t generate a preview. See the error below.
                 </div>
               )}
               {grouped.map((row, idx) =>
@@ -535,10 +605,16 @@ export default function Page() {
                     <span className={styles.treePath}>{row.section}</span>
                   </div>
                 ) : (
-                  <div key={`f-${idx}`} className={styles.treeLine}>
+                  <button
+                    key={`f-${idx}`}
+                    type="button"
+                    className={`${styles.treeFile} ${styles.treeLine}`}
+                    onClick={() => row.path && setSelectedPath(row.path)}
+                    title={`View ${row.path}`}
+                  >
                     <span className={styles.treePath}>{row.path}</span>
                     <span className={styles.treeLabel}>{row.label}</span>
-                  </div>
+                  </button>
                 )
               )}
             </div>
@@ -593,7 +669,7 @@ export default function Page() {
                 <>Building zip…</>
               ) : (
                 <>
-                  Download <code>{slugify(projectName)}-appblueprints.zip</code>
+                  Download <code>{slugify(projectName)}-harness-forge.zip</code>
                   <span className={styles.kbd}>⌘ ↵</span>
                 </>
               )}
@@ -614,8 +690,13 @@ export default function Page() {
           <div className={styles.cmd}>
             <span className={styles.prompt}>$</span>
             <span className={styles.cmdTxt}>{cliCommand}</span>
-            <button type="button" className={styles.copy} onClick={copyCmd}>
-              {copied ? "copied" : "copy"}
+            <button
+              type="button"
+              className={styles.copy}
+              onClick={copyCmd}
+              aria-label="Copy CLI command"
+            >
+              {copied === "ok" ? "copied" : copied === "err" ? "failed" : "copy"}
             </button>
           </div>
         </aside>
@@ -624,18 +705,80 @@ export default function Page() {
       <footer className={styles.footer}>
         <div>
           MIT · maintained by{" "}
-          <a href="https://github.com/philipposk">philipposk</a> · data refreshed nightly from
-          upstream awesome-lists.
+          <a
+            href="https://github.com/philipposk"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            philipposk
+          </a>{" "}
+          · data refreshed nightly from upstream awesome-lists.
         </div>
         <div className={styles.footerLinks}>
-          <a href="https://github.com/philipposk/AppBlueprints">github</a>
-          <a href="https://www.npmjs.com/package/appblueprints">npm</a>
-          <a href="https://pypi.org/project/appblueprints/">PyPI</a>
-          <a href="https://marketplace.visualstudio.com/items?itemName=philipposk.appblueprints-vscode">
+          <a
+            href="https://github.com/philipposk/harness-forge"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            github
+          </a>
+          <a
+            href="https://www.npmjs.com/package/harness-forge"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            npm
+          </a>
+          <a
+            href="https://pypi.org/project/harness-forge/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            PyPI
+          </a>
+          <a
+            href="https://marketplace.visualstudio.com/items?itemName=philipposk.harness-forge-vscode"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             VS Code
           </a>
         </div>
       </footer>
+
+      {selectedFile && (
+        <div
+          className={styles.modalOverlay}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Contents of ${selectedFile.path}`}
+          onClick={() => setSelectedPath(null)}
+        >
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHead}>
+              <span className={styles.modalTitle}>{selectedFile.path}</span>
+              <div className={styles.modalActions}>
+                <button
+                  type="button"
+                  className={styles.modalBtn}
+                  onClick={copySelectedFile}
+                >
+                  {fileCopied ? "copied" : "copy"}
+                </button>
+                <button
+                  type="button"
+                  className={styles.modalBtn}
+                  onClick={() => setSelectedPath(null)}
+                  aria-label="Close file viewer"
+                >
+                  close
+                </button>
+              </div>
+            </div>
+            <pre className={styles.modalBody}>{selectedFile.content}</pre>
+          </div>
+        </div>
+      )}
     </>
   );
 }

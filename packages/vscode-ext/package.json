@@ -1,6 +1,6 @@
 {
-  "name": "appblueprints-vscode",
-  "displayName": "AppBlueprints",
+  "name": "harness-forge-vscode",
+  "displayName": "Harness Forge",
   "description": "Multi-harness AI coding config generator. AGENTS.md, CLAUDE.md, .cursor/rules, skills + MCP bundles — for whichever AI coding tool you use.",
   "version": "0.0.1",
   "publisher": "philipposk",
@@ -16,14 +16,14 @@
   "contributes": {
     "commands": [
       {
-        "command": "appblueprints.init",
-        "title": "AppBlueprints: Init this workspace",
-        "category": "AppBlueprints"
+        "command": "harness-forge.init",
+        "title": "Harness Forge: Init this workspace",
+        "category": "Harness Forge"
       },
       {
-        "command": "appblueprints.openWeb",
-        "title": "AppBlueprints: Open web wizard",
-        "category": "AppBlueprints"
+        "command": "harness-forge.openWeb",
+        "title": "Harness Forge: Open web wizard",
+        "category": "Harness Forge"
       }
     ]
   },
@@ -40,6 +40,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/philipposk/AppBlueprints"
+    "url": "https://github.com/philipposk/harness-forge"
   }
 }

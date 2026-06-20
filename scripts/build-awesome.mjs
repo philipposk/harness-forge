@@ -14,7 +14,7 @@ const outDir = resolve(repoRoot, "dist-awesome");
 function header() {
   return `# Awesome AI-Dev Configs [![Awesome](https://awesome.re/badge.svg)](https://github.com/sindresorhus/awesome)
 
-Curated configs, skills, and MCP servers for every popular AI coding tool. Auto-generated from [philipposk/AppBlueprints](https://github.com/philipposk/AppBlueprints) — \`data/\` is the source of truth.
+Curated configs, skills, and MCP servers for every popular AI coding tool. Auto-generated from [philipposk/harness-forge](https://github.com/philipposk/harness-forge) — \`data/\` is the source of truth.
 
 ## Contents
 
