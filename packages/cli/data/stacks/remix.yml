@@ -1,0 +1,23 @@
+id: remix
+name: Remix
+description: Full-stack Remix app with nested routes and loaders/actions. Suits content sites and apps that lean on web fundamentals.
+tags: [javascript, typescript, remix, react, fullstack]
+recommendedSkills:
+  - testing-vitest
+  - testing-playwright
+  - lint-eslint-prettier
+  - frontend-tailwind
+  - a11y-axe
+  - git-conventional-commits
+recommendedMcps:
+  - github
+  - filesystem
+  - postgres
+  - vercel
+  - sentry
+conventions:
+  - "Use loaders/actions for data; avoid client-side fetch where a loader fits."
+  - "Lean on the platform: forms, fetchers, and progressive enhancement first."
+  - "TypeScript strict mode; type loader/action return values."
+  - "Vitest for units, Playwright for end-to-end."
+  - "ESLint + Prettier, formatted on save."

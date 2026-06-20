@@ -1,0 +1,23 @@
+id: sveltekit
+name: SvelteKit
+description: Full-stack SvelteKit app with server routes and form actions. Suits fast, lightweight products with minimal client JS.
+tags: [javascript, typescript, svelte, sveltekit, fullstack]
+recommendedSkills:
+  - testing-vitest
+  - testing-playwright
+  - lint-eslint-prettier
+  - frontend-tailwind
+  - a11y-axe
+  - git-conventional-commits
+recommendedMcps:
+  - github
+  - filesystem
+  - postgres
+  - vercel
+  - playwright
+conventions:
+  - "Use TypeScript everywhere; enable svelte-check in CI."
+  - "Prefer load functions and form actions over client-side fetch where possible."
+  - "Vitest for units, Playwright for end-to-end flows."
+  - "ESLint + Prettier with eslint-plugin-svelte; format on save."
+  - "Keep components small; colocate styles with the component."

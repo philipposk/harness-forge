@@ -42,6 +42,15 @@ describe("generate produces expected file set", () => {
     expect(paths).toContain("SPEC.md");
     expect(paths).not.toContain(".windsurfrules");
 
+    // Per-skill files are emitted for Claude Code and Cursor.
+    expect(
+      paths.some((p) => p.startsWith(".claude/skills/") && p.endsWith("/SKILL.md"))
+    ).toBe(true);
+    expect(paths.some((p) => p.startsWith(".cursor/rules/skill-"))).toBe(true);
+    const aSkill = files.find((f) => f.path.endsWith("/SKILL.md"))!;
+    expect(aSkill.content).toContain("name:");
+    expect(aSkill.content).toContain("## When to use");
+
     const agents = files.find((f) => f.path === "AGENTS.md")!;
     expect(agents.content).toContain("Demo App");
     expect(agents.content).toContain("Next.js + Prisma + Postgres");

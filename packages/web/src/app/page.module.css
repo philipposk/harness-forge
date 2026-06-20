@@ -328,6 +328,98 @@
   color: var(--muted-2);
 }
 
+/* codebase scanner */
+.scanBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.scanToggle {
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font: 500 12.5px/1 var(--sans);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.scanToggle:hover {
+  background: var(--bg-2);
+}
+
+.scanHint {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.scanPanel {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.scanArea {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font: 400 12.5px/1.5 var(--mono);
+  color: var(--ink);
+}
+
+.scanArea:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ink) 8%, transparent);
+}
+
+.scanActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.scanRun {
+  background: var(--ink);
+  color: var(--bg);
+  border: 1px solid var(--ink);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font: 500 13px/1 var(--sans);
+  cursor: pointer;
+}
+
+.scanRun:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.scanMsg {
+  font-size: 12.5px;
+}
+
+.scanMsgBlock {
+  margin-bottom: 14px;
+}
+
+.scanOk {
+  color: var(--good);
+}
+
+.scanWarn {
+  color: #b3261e;
+}
+
 /* stack cards */
 .stackGrid {
   display: grid;
@@ -948,6 +1040,51 @@
   color: var(--ink-2);
   white-space: pre;
   tab-size: 2;
+}
+
+/* syntax tokens (paper-theme palette) */
+.tkKey {
+  color: #7a4dd6;
+}
+.tkStr {
+  color: #1f7a3a;
+}
+.tkNum {
+  color: #b5651d;
+}
+.tkBool {
+  color: #b3261e;
+}
+.tkPunct {
+  color: var(--muted);
+}
+.tkComment {
+  color: var(--muted-2);
+  font-style: italic;
+}
+.tkHead {
+  color: var(--ink);
+  font-weight: 600;
+}
+.tkBullet {
+  color: var(--accent);
+}
+.tkCode {
+  color: #b5651d;
+}
+.tkBold {
+  color: var(--ink);
+  font-weight: 600;
+}
+.tkLink {
+  color: #2563b3;
+}
+.tkQuote {
+  color: var(--muted);
+  font-style: italic;
+}
+.tkHr {
+  color: var(--line-2);
 }
 
 /* responsive */

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./page.module.css";
+import { CodeBlock } from "./CodeBlock";
 
 interface HarnessLite {
   id: string;
@@ -75,6 +76,8 @@ function labelForFile(
   if (path === "CLAUDE.md") return "claude-code";
   if (path === ".mcp.json") return "mcp";
   if (path === "TODO.md" || path === "SPEC.md") return "scaffold";
+  if (path.startsWith(".claude/skills/")) return "claude-code · skill";
+  if (path.startsWith(".cursor/rules/skill-")) return "cursor · skill";
   if (path.startsWith(".cursor/")) return "cursor";
   if (path.startsWith(".clinerules")) return "cline";
   if (path.startsWith(".windsurf")) return "windsurf";
@@ -100,6 +103,10 @@ export default function Page() {
   const [copied, setCopied] = useState<"idle" | "ok" | "err">("idle");
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
   const [fileCopied, setFileCopied] = useState(false);
+  const [scanOpen, setScanOpen] = useState(false);
+  const [scanText, setScanText] = useState("");
+  const [scanning, setScanning] = useState(false);
+  const [scanMsg, setScanMsg] = useState<{ kind: "ok" | "warn"; text: string } | null>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const reqIdRef = useRef(0);
@@ -195,6 +202,48 @@ export default function Page() {
       setTimeout(() => setFileCopied(false), 1400);
     } catch {
       /* clipboard blocked — no-op */
+    }
+  }
+
+  async function scanManifest() {
+    if (!scanText.trim()) return;
+    setScanning(true);
+    setScanMsg(null);
+    try {
+      const res = await fetch("./api/detect", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ manifest: scanText }),
+      });
+      const json = (await res.json()) as {
+        result?: { stackId: string; confidence: string; evidence: string[] } | null;
+        error?: string;
+      };
+      if (!res.ok || !json.result) {
+        setScanMsg({ kind: "warn", text: json.error ?? "Couldn't detect a stack." });
+        return;
+      }
+      const match = stacks.find((s) => s.id === json.result!.stackId);
+      if (match) {
+        setStackId(match.id);
+        setScanMsg({
+          kind: "ok",
+          text: `Detected ${match.name} (${json.result.confidence}) — selected.`,
+        });
+        setScanOpen(false);
+      } else {
+        setScanMsg({
+          kind: "warn",
+          text: `Detected "${json.result.stackId}" but there's no matching profile yet.`,
+        });
+      }
+    } catch (err) {
+      setScanMsg({
+        kind: "warn",
+        text: err instanceof Error ? err.message : "Scan failed.",
+      });
+    } finally {
+      setScanning(false);
     }
   }
 
@@ -437,6 +486,61 @@ export default function Page() {
               </div>
             </div>
             <div className={styles.stepBody}>
+              <div className={styles.scanBar}>
+                <button
+                  type="button"
+                  className={styles.scanToggle}
+                  onClick={() => {
+                    setScanOpen((v) => !v);
+                    setScanMsg(null);
+                  }}
+                  aria-expanded={scanOpen}
+                >
+                  {scanOpen ? "Close scanner" : "Scan my project ↓"}
+                </button>
+                <span className={styles.scanHint}>
+                  Paste a manifest to auto-pick a stack
+                </span>
+              </div>
+              {scanOpen && (
+                <div className={styles.scanPanel}>
+                  <textarea
+                    className={styles.scanArea}
+                    value={scanText}
+                    onChange={(e) => setScanText(e.target.value)}
+                    placeholder="Paste your package.json, pyproject.toml, Cargo.toml, go.mod, or requirements.txt here…"
+                    spellCheck={false}
+                  />
+                  <div className={styles.scanActions}>
+                    <button
+                      type="button"
+                      className={styles.scanRun}
+                      onClick={scanManifest}
+                      disabled={scanning || !scanText.trim()}
+                    >
+                      {scanning ? "Detecting…" : "Detect stack"}
+                    </button>
+                    {scanMsg && (
+                      <span
+                        className={`${styles.scanMsg} ${
+                          scanMsg.kind === "ok" ? styles.scanOk : styles.scanWarn
+                        }`}
+                      >
+                        {scanMsg.text}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+              {!scanOpen && scanMsg && (
+                <div
+                  className={`${styles.scanMsg} ${
+                    scanMsg.kind === "ok" ? styles.scanOk : styles.scanWarn
+                  } ${styles.scanMsgBlock}`}
+                >
+                  {scanMsg.text}
+                </div>
+              )}
               <div className={styles.stackGrid}>
                 {stacks.map((s) => (
                   <button
@@ -775,7 +879,7 @@ export default function Page() {
                 </button>
               </div>
             </div>
-            <pre className={styles.modalBody}>{selectedFile.content}</pre>
+            <CodeBlock path={selectedFile.path} content={selectedFile.content} />
           </div>
         </div>
       )}

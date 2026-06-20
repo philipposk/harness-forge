@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-20T19:49:12.552Z",
+  "generatedAt": "2026-06-20T20:21:11.722Z",
   "harnesses": [
     {
       "id": "aider",
@@ -356,6 +356,41 @@
   ],
   "stacks": [
     {
+      "id": "django-postgres",
+      "name": "Django + Postgres",
+      "description": "Python web app with Django and PostgreSQL. Suits content-heavy products, admin-driven tools, and teams that want batteries included.",
+      "tags": [
+        "python",
+        "django",
+        "postgres",
+        "backend",
+        "fullstack"
+      ],
+      "recommendedSkills": [
+        "testing-pytest",
+        "lint-ruff",
+        "docs-mkdocs",
+        "api-openapi",
+        "security-secret-scan",
+        "git-conventional-commits"
+      ],
+      "recommendedMcps": [
+        "github",
+        "filesystem",
+        "postgres",
+        "redis",
+        "sentry"
+      ],
+      "conventions": [
+        "Use Django's app structure; keep business logic in services, not views.",
+        "Type-annotate new code and run mypy in CI.",
+        "pytest + pytest-django for tests; factory_boy for fixtures.",
+        "Ruff for lint + format; no flake8/black duplication.",
+        "Never commit secrets — use environment variables and django-environ.",
+        "Migrations are reviewed like code; never edit an applied migration."
+      ]
+    },
+    {
       "id": "fastapi-postgres",
       "name": "FastAPI + Postgres",
       "description": "Python FastAPI backend with SQLAlchemy and Postgres. Suits API-first services and AI/ML backends.",
@@ -384,6 +419,41 @@
         "Alembic for database migrations; never alter schema by hand.",
         "Ruff for lint+format, mypy for type checking.",
         "Tests with pytest, fixtures in conftest.py, factory-boy for test data."
+      ]
+    },
+    {
+      "id": "go-service",
+      "name": "Go service",
+      "description": "Backend service or API in Go. Suits high-throughput services, CLIs, and infrastructure tooling.",
+      "tags": [
+        "go",
+        "golang",
+        "backend",
+        "service",
+        "api"
+      ],
+      "recommendedSkills": [
+        "api-openapi",
+        "security-secret-scan",
+        "deploy-checklist",
+        "incident-response",
+        "docs-onboarding",
+        "git-conventional-commits"
+      ],
+      "recommendedMcps": [
+        "github",
+        "filesystem",
+        "postgres",
+        "docker",
+        "kubernetes",
+        "sentry"
+      ],
+      "conventions": [
+        "Follow standard Go project layout; keep packages cohesive and small.",
+        "Return wrapped errors with context; never ignore an error.",
+        "Table-driven tests with the standard testing package; run `go test ./...` in CI.",
+        "gofmt + go vet + golangci-lint clean before merge.",
+        "Context-aware APIs: pass context.Context as the first argument."
       ]
     },
     {
@@ -482,6 +552,40 @@
       ]
     },
     {
+      "id": "remix",
+      "name": "Remix",
+      "description": "Full-stack Remix app with nested routes and loaders/actions. Suits content sites and apps that lean on web fundamentals.",
+      "tags": [
+        "javascript",
+        "typescript",
+        "remix",
+        "react",
+        "fullstack"
+      ],
+      "recommendedSkills": [
+        "testing-vitest",
+        "testing-playwright",
+        "lint-eslint-prettier",
+        "frontend-tailwind",
+        "a11y-axe",
+        "git-conventional-commits"
+      ],
+      "recommendedMcps": [
+        "github",
+        "filesystem",
+        "postgres",
+        "vercel",
+        "sentry"
+      ],
+      "conventions": [
+        "Use loaders/actions for data; avoid client-side fetch where a loader fits.",
+        "Lean on the platform: forms, fetchers, and progressive enhancement first.",
+        "TypeScript strict mode; type loader/action return values.",
+        "Vitest for units, Playwright for end-to-end.",
+        "ESLint + Prettier, formatted on save."
+      ]
+    },
+    {
       "id": "rust-cli",
       "name": "Rust CLI",
       "description": "Rust command-line tool with clap and serde. Suits distributable binaries and systems tools.",
@@ -506,6 +610,109 @@
         "Tests with cargo test; integration tests under tests/.",
         "Clippy clean — `cargo clippy --all-targets -- -D warnings`.",
         "Release binaries via cargo-dist."
+      ]
+    },
+    {
+      "id": "sveltekit",
+      "name": "SvelteKit",
+      "description": "Full-stack SvelteKit app with server routes and form actions. Suits fast, lightweight products with minimal client JS.",
+      "tags": [
+        "javascript",
+        "typescript",
+        "svelte",
+        "sveltekit",
+        "fullstack"
+      ],
+      "recommendedSkills": [
+        "testing-vitest",
+        "testing-playwright",
+        "lint-eslint-prettier",
+        "frontend-tailwind",
+        "a11y-axe",
+        "git-conventional-commits"
+      ],
+      "recommendedMcps": [
+        "github",
+        "filesystem",
+        "postgres",
+        "vercel",
+        "playwright"
+      ],
+      "conventions": [
+        "Use TypeScript everywhere; enable svelte-check in CI.",
+        "Prefer load functions and form actions over client-side fetch where possible.",
+        "Vitest for units, Playwright for end-to-end flows.",
+        "ESLint + Prettier with eslint-plugin-svelte; format on save.",
+        "Keep components small; colocate styles with the component."
+      ]
+    },
+    {
+      "id": "t3-trpc",
+      "name": "T3 (Next.js + tRPC + Prisma)",
+      "description": "End-to-end typesafe stack — Next.js, tRPC, Prisma, Tailwind, NextAuth. Suits typesafe SaaS products built fast.",
+      "tags": [
+        "typescript",
+        "nextjs",
+        "trpc",
+        "prisma",
+        "tailwind",
+        "fullstack"
+      ],
+      "recommendedSkills": [
+        "testing-vitest",
+        "testing-playwright",
+        "lint-eslint-prettier",
+        "frontend-tailwind",
+        "db-prisma",
+        "auth-nextauth",
+        "git-conventional-commits"
+      ],
+      "recommendedMcps": [
+        "github",
+        "filesystem",
+        "postgres",
+        "vercel",
+        "sentry"
+      ],
+      "conventions": [
+        "Keep end-to-end type safety: infer types from tRPC routers, never redeclare.",
+        "Validate all tRPC inputs with zod schemas.",
+        "Prisma is the single source of truth for the DB schema; migrations reviewed like code.",
+        "Vitest for units, Playwright for end-to-end; test tRPC procedures directly.",
+        "ESLint + Prettier, formatted on save; TypeScript strict mode on."
+      ]
+    },
+    {
+      "id": "vue-vite",
+      "name": "Vue + Vite",
+      "description": "Vue 3 single-page app built with Vite. Suits dashboards, internal tools, and component-rich frontends.",
+      "tags": [
+        "javascript",
+        "typescript",
+        "vue",
+        "vite",
+        "frontend"
+      ],
+      "recommendedSkills": [
+        "testing-vitest",
+        "lint-eslint-prettier",
+        "frontend-tailwind",
+        "a11y-axe",
+        "perf-lighthouse",
+        "git-conventional-commits"
+      ],
+      "recommendedMcps": [
+        "github",
+        "filesystem",
+        "vercel",
+        "puppeteer"
+      ],
+      "conventions": [
+        "Use the Composition API with `<script setup>` and TypeScript.",
+        "Pinia for state; keep stores small and typed.",
+        "Vitest + @vue/test-utils for components.",
+        "ESLint + Prettier with eslint-plugin-vue; format on save.",
+        "Lazy-load routes and keep the main bundle lean."
       ]
     }
   ],

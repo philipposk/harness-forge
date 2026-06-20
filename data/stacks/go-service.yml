@@ -1,0 +1,24 @@
+id: go-service
+name: Go service
+description: Backend service or API in Go. Suits high-throughput services, CLIs, and infrastructure tooling.
+tags: [go, golang, backend, service, api]
+recommendedSkills:
+  - api-openapi
+  - security-secret-scan
+  - deploy-checklist
+  - incident-response
+  - docs-onboarding
+  - git-conventional-commits
+recommendedMcps:
+  - github
+  - filesystem
+  - postgres
+  - docker
+  - kubernetes
+  - sentry
+conventions:
+  - "Follow standard Go project layout; keep packages cohesive and small."
+  - "Return wrapped errors with context; never ignore an error."
+  - "Table-driven tests with the standard testing package; run `go test ./...` in CI."
+  - "gofmt + go vet + golangci-lint clean before merge."
+  - "Context-aware APIs: pass context.Context as the first argument."

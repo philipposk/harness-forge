@@ -233,6 +233,45 @@ Generated MVP task list. Edit freely.
 ## Out of scope
 - (fill in)
 `,
+
+  skillMd: `---
+name: <%= it.skill.id %>
+description: <%= it.skill.description %>
+---
+
+# <%= it.skill.name %>
+
+<%= it.skill.description %>
+
+## When to use
+
+Use this skill while working on <%= it.projectName %> when you need: <%= it.skill.name.toLowerCase() %>.
+<% if (it.skill.tags && it.skill.tags.length) { %>
+Relevant areas: <%= it.skill.tags.join(", ") %>.
+<% } %>
+## Reference
+
+Upstream: <%= it.skill.sourceUrl %>
+<% if (it.skill.installSnippet) { %>
+## Install
+
+\`\`\`
+<%= it.skill.installSnippet %>
+\`\`\`
+<% } %>`,
+
+  cursorSkillMdc: `---
+description: <%= it.skill.description %>
+globs:
+alwaysApply: false
+---
+
+# <%= it.skill.name %>
+
+<%= it.skill.description %>
+
+Source: <%= it.skill.sourceUrl %>
+`,
 };
 
 function renderMcpJson(mcps: McpEntry[]): string {
@@ -348,6 +387,27 @@ export function generate(input: GenerateInput): GeneratedFile[] {
       content: eta.renderString(TEMPLATES.openhandsRepo, ctx),
       harnessId: "openhands",
     });
+  }
+
+  // Per-skill files: turn the recommended skills into real, installable files
+  // for the harnesses that have a first-class skill/rule concept, rather than
+  // only listing them in the instruction docs.
+  for (const skill of input.skills) {
+    const skillCtx = { skill, projectName: input.projectName };
+    if (has("claude-code")) {
+      files.push({
+        path: `.claude/skills/${skill.id}/SKILL.md`,
+        content: eta.renderString(TEMPLATES.skillMd, skillCtx),
+        harnessId: "claude-code",
+      });
+    }
+    if (has("cursor")) {
+      files.push({
+        path: `.cursor/rules/skill-${skill.id}.mdc`,
+        content: eta.renderString(TEMPLATES.cursorSkillMdc, skillCtx),
+        harnessId: "cursor",
+      });
+    }
   }
 
   const mcpEnabledHarness = input.harnesses.some((h) => h.supports.mcp);

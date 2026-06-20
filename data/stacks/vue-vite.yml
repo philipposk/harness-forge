@@ -1,0 +1,22 @@
+id: vue-vite
+name: Vue + Vite
+description: Vue 3 single-page app built with Vite. Suits dashboards, internal tools, and component-rich frontends.
+tags: [javascript, typescript, vue, vite, frontend]
+recommendedSkills:
+  - testing-vitest
+  - lint-eslint-prettier
+  - frontend-tailwind
+  - a11y-axe
+  - perf-lighthouse
+  - git-conventional-commits
+recommendedMcps:
+  - github
+  - filesystem
+  - vercel
+  - puppeteer
+conventions:
+  - "Use the Composition API with `<script setup>` and TypeScript."
+  - "Pinia for state; keep stores small and typed."
+  - "Vitest + @vue/test-utils for components."
+  - "ESLint + Prettier with eslint-plugin-vue; format on save."
+  - "Lazy-load routes and keep the main bundle lean."

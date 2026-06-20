@@ -63,6 +63,59 @@ describe("detectStack", () => {
     expect(r?.stackId).toBe("mobile-expo");
   });
 
+  it("detects remix from @remix-run/react", async () => {
+    await writeFile(
+      join(dir, "package.json"),
+      JSON.stringify({ dependencies: { "@remix-run/react": "2.0.0" } })
+    );
+    const r = await detectStack(dir);
+    expect(r?.stackId).toBe("remix");
+  });
+
+  it("detects sveltekit from @sveltejs/kit", async () => {
+    await writeFile(
+      join(dir, "package.json"),
+      JSON.stringify({ devDependencies: { "@sveltejs/kit": "2.0.0" } })
+    );
+    const r = await detectStack(dir);
+    expect(r?.stackId).toBe("sveltekit");
+  });
+
+  it("detects t3-trpc from next + @trpc/server", async () => {
+    await writeFile(
+      join(dir, "package.json"),
+      JSON.stringify({
+        dependencies: { next: "14.0.0", "@trpc/server": "10.0.0" },
+      })
+    );
+    const r = await detectStack(dir);
+    expect(r?.stackId).toBe("t3-trpc");
+  });
+
+  it("detects vue-vite from vue", async () => {
+    await writeFile(
+      join(dir, "package.json"),
+      JSON.stringify({ dependencies: { vue: "3.4.0" } })
+    );
+    const r = await detectStack(dir);
+    expect(r?.stackId).toBe("vue-vite");
+  });
+
+  it("detects django-postgres from requirements.txt", async () => {
+    await writeFile(join(dir, "requirements.txt"), "Django==5.0\npsycopg2\n");
+    const r = await detectStack(dir);
+    expect(r?.stackId).toBe("django-postgres");
+  });
+
+  it("detects go-service from go.mod", async () => {
+    await writeFile(
+      join(dir, "go.mod"),
+      "module github.com/me/svc\n\ngo 1.22\n"
+    );
+    const r = await detectStack(dir);
+    expect(r?.stackId).toBe("go-service");
+  });
+
   it("returns null when no signals", async () => {
     const r = await detectStack(dir);
     expect(r).toBeNull();

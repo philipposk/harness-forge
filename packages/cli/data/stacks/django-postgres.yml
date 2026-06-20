@@ -1,0 +1,24 @@
+id: django-postgres
+name: Django + Postgres
+description: Python web app with Django and PostgreSQL. Suits content-heavy products, admin-driven tools, and teams that want batteries included.
+tags: [python, django, postgres, backend, fullstack]
+recommendedSkills:
+  - testing-pytest
+  - lint-ruff
+  - docs-mkdocs
+  - api-openapi
+  - security-secret-scan
+  - git-conventional-commits
+recommendedMcps:
+  - github
+  - filesystem
+  - postgres
+  - redis
+  - sentry
+conventions:
+  - "Use Django's app structure; keep business logic in services, not views."
+  - "Type-annotate new code and run mypy in CI."
+  - "pytest + pytest-django for tests; factory_boy for fixtures."
+  - "Ruff for lint + format; no flake8/black duplication."
+  - "Never commit secrets — use environment variables and django-environ."
+  - "Migrations are reviewed like code; never edit an applied migration."

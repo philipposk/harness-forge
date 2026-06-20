@@ -23,11 +23,17 @@ Curated configs, skills, and MCP servers for every popular AI coding tool. Auto-
 - [**Zed**](https://zed.dev/docs/ai/rules) — Zed Industries. _(mcp, AGENTS.md)_
 ## Stacks
 
+- **Django + Postgres** (`django-postgres`) — Python web app with Django and PostgreSQL. Suits content-heavy products, admin-driven tools, and teams that want batteries included.
 - **FastAPI + Postgres** (`fastapi-postgres`) — Python FastAPI backend with SQLAlchemy and Postgres. Suits API-first services and AI/ML backends.
+- **Go service** (`go-service`) — Backend service or API in Go. Suits high-throughput services, CLIs, and infrastructure tooling.
 - **Mobile (Expo + React Native)** (`mobile-expo`) — Cross-platform mobile app with Expo and React Native. Suits prototypes and small teams shipping to iOS+Android from one codebase.
 - **Next.js + Prisma + Postgres** (`nextjs-prisma`) — Next.js App Router with Prisma ORM and Postgres. Suits production web apps that need auth, DB, and SSR.
 - **React + Node** (`react-node`) — Full-stack JavaScript with React frontend and Node.js backend (Express/Fastify). Default for SaaS prototypes and internal tools.
+- **Remix** (`remix`) — Full-stack Remix app with nested routes and loaders/actions. Suits content sites and apps that lean on web fundamentals.
 - **Rust CLI** (`rust-cli`) — Rust command-line tool with clap and serde. Suits distributable binaries and systems tools.
+- **SvelteKit** (`sveltekit`) — Full-stack SvelteKit app with server routes and form actions. Suits fast, lightweight products with minimal client JS.
+- **T3 (Next.js + tRPC + Prisma)** (`t3-trpc`) — End-to-end typesafe stack — Next.js, tRPC, Prisma, Tailwind, NextAuth. Suits typesafe SaaS products built fast.
+- **Vue + Vite** (`vue-vite`) — Vue 3 single-page app built with Vite. Suits dashboards, internal tools, and component-rich frontends.
 ## Skills
 
 ### Recommended

@@ -1,0 +1,24 @@
+id: t3-trpc
+name: T3 (Next.js + tRPC + Prisma)
+description: End-to-end typesafe stack — Next.js, tRPC, Prisma, Tailwind, NextAuth. Suits typesafe SaaS products built fast.
+tags: [typescript, nextjs, trpc, prisma, tailwind, fullstack]
+recommendedSkills:
+  - testing-vitest
+  - testing-playwright
+  - lint-eslint-prettier
+  - frontend-tailwind
+  - db-prisma
+  - auth-nextauth
+  - git-conventional-commits
+recommendedMcps:
+  - github
+  - filesystem
+  - postgres
+  - vercel
+  - sentry
+conventions:
+  - "Keep end-to-end type safety: infer types from tRPC routers, never redeclare."
+  - "Validate all tRPC inputs with zod schemas."
+  - "Prisma is the single source of truth for the DB schema; migrations reviewed like code."
+  - "Vitest for units, Playwright for end-to-end; test tRPC procedures directly."
+  - "ESLint + Prettier, formatted on save; TypeScript strict mode on."
