@@ -262,9 +262,7 @@ export default function Page() {
           <nav className={styles.nav}>
             <a href="https://github.com/philipposk/AppBlueprints#readme">Docs</a>
             <a href="#harnesses">Harnesses</a>
-            <a href="https://github.com/philipposk/AppBlueprints/blob/main/AWESOME.md">
-              Awesome list
-            </a>
+            <a href="#catalog">Awesome list</a>
             {data && (
               <span className={styles.pill}>
                 <span className={styles.dot} />
@@ -624,8 +622,8 @@ export default function Page() {
       <footer className={styles.footer}>
         <div>
           MIT · maintained by{" "}
-          <a href="https://github.com/philipposk">philipposk</a> · data refreshed nightly from
-          upstream awesome-lists.
+          <a href="https://github.com/philipposk">philipposk</a>.{" "}
+          <span id="catalog">The awesome-list catalog crawl is paused. This page does not fetch or invent list items.</span>
         </div>
         <div className={styles.footerLinks}>
           <a href="https://github.com/philipposk/AppBlueprints">github</a>
